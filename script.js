@@ -24,3 +24,4 @@ const checkEmail=()=>{
         email.value=""
     }
 }
+console.log('Hello reviewer, if you have any questions or I have some mistakes, please let me know. WhatsApp,Viber,telega - +375296533196, Discord - @IharVypau')
