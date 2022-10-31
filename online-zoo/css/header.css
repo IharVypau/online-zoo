@@ -15,6 +15,9 @@ header .wrapper{
     align-items: center;
     height: 100%;
     margin: 0 auto;
+}
+header .wrapper a:hover{
+color:#E47209;
 } 
 .logo{
     border: 1px solid white;

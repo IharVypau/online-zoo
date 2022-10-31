@@ -105,20 +105,52 @@ div.user-name{
     height:8px;
     position: relative;
     background: #fff;
+    height: 8px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
 }
-.section-5 .big-scroll .scroll{
-    position: absolute;
-    top: 1px;
-    left: 0;
+.scroll-wrap:hover input[type=range]::-webkit-slider-thumb{
+    background: #E47209;
+    border-color: #E47209;
+}
+.scroll-wrap:active input.big-scroll::-webkit-slider-thumb{
+    background: #4B9200;
+    border-color: #4B9200;
+}
+
+
+input[type=range] {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+  }
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+  
+input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    border: 1px solid orange;
     height: 6px;
     width: 115px;
-    background-color: orange;
     border-radius: 5px;
-    z-index: 1;
+    background: linear-gradient(113.96deg, #F9804B 1.49%, #FE9013 101.44%);
+    cursor: pointer;
+   
 }
-.section-5 .scroll:active{
-    background-color: #4B9200;
+input[type=range]::-moz-range-thumb {
+    border: 1px solid orange;
+    height: 6px;
+    width: 115px;
+    border-radius: 5px;
+    background: linear-gradient(113.96deg, #F9804B 1.49%, #FE9013 101.44%);
+    cursor: pointer;
 }
+
 .section-5 button{
     margin: 52px 0px 180px 0px;
 }

@@ -18,7 +18,7 @@
                         <li class="map"><a onclick="toggleClassActive('map')">Map</a></li>
                         <li class="zoos"><a onclick="toggleClassActive('zoos')">Zoos</a> </li>
                         <li class="donate"><a href="donate.html" onclick="toggleClassActive('donate')">Donate</a></li>
-                        <li class="contact"><a onclick="toggleClassActive('contact')">Contact us</a></li>
+                        <li class="contact"><a onclick="toggleClassActive('contact')" href="#contact">Contact us</a></li>
                     </ul>
                     <a href="https://www.figma.com/file/ypzT9idgAILaSRVRmDAJxn/online-zoo-3-weeks" target="_blank" class="disigned">Designed by ©</a>
                 </div>
@@ -284,16 +284,14 @@
                         </li>
                         <li class="scroll-row">
                             <div class="scroll-wrap border-r-5">
-                                <div class="big-scroll border-r-5">
-                                    <span class="scroll"></span>
-                                </div>
+                                <input class="big-scroll border-r-5" type="range" value="1" min="1" max="4">
                             </div>
                         </li>
                     </ul>
                     <button class="default border-r-5">leave feedback</button>
                 </div>
             </section>
-            <footer>
+            <footer id="contact">
                 <div class="wrapper">
                     <ul class="footer-logo-subscribe">
                         <li class="logo"><a href="#about" onclick="toggleClassActive('about')">PetStory online</a></li>

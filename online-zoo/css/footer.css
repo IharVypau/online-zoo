@@ -14,6 +14,9 @@ footer .wrapper{
     flex-direction: column;
     justify-content: space-between;
 }
+footer .info a:hover{
+    color:#E47209;
+    } 
 footer .footer-logo-subscribe{
     display: flex;
     justify-content: space-between;
@@ -142,6 +145,18 @@ footer .info .links ul li{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.social-media ul li a:hover .facebook-icon{
+    background-color:#E47209;
+}
+.social-media ul li a:hover .twitter-icon{
+    background-color:#E47209;
+}
+.social-media ul li a:hover .instagram-icon{
+    background-color:#E47209;
+}
+.social-media ul li a:hover .youtube-icon{
+    background-color:#E47209;
 }
 .author{
     align-self: flex-end;
