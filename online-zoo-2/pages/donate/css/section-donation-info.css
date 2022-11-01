@@ -35,7 +35,6 @@
     text-transform:capitalize;
 }
 .section-donation-info .wrapper .container{
-    height: 100%;
     margin-top:60px;
     padding: 40px 92px 62px;
     border-radius: 20px;
@@ -108,6 +107,8 @@ section.animals-widjet p.text{
 .amount-feed-widjet{
     margin-top: 48px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .amount-feed-widjet p{
     font-family: 'Roboto Regular';
@@ -121,6 +122,10 @@ section.animals-widjet p.text{
 .amount-wrap {
     width: 100%; 
     margin-top:17px;
+}
+.amount-feed-widjet p.last{
+    margin-top: 30px;
+    align-self: center;
 }
 
 .range-wrap{
@@ -187,10 +192,37 @@ span.roller-icon {
     text-transform: uppercase;
     color: #333B41;
 }
-input.any-amount{
+input.other-amount{
     margin-top:50px;
+    height: 54px;
+    width: 268px;
+    border: 2px solid #929699;
+    padding: 0px 20px 0px 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    background: url('../img/svg/dollar-gray.svg') no-repeat center right 10px;
+    border-radius: 3px;
+    font-family: 'Roboto Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    /* or 22px */
+    color: #929699;
+    align-self: center;
 }
 
-a[type=button]{
+input[type=submit]{
     margin-top: 31px;
+    align-self: center;
+    border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

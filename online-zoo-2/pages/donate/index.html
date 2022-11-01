@@ -45,8 +45,8 @@
                             <div class="x-icon"><img src="./img/svg/x_icon.svg" alt="x"></div>
                             <div class="img-widjet"><img src="./img/panda-widget.png" alt="panda"></div>
                         </section>
-                        <section class="amount-feed-widjet">
-                            <p>Amount</p>
+                        <form class="amount-feed-widjet">
+                            <p >Amount</p>
                             <div class="amount-wrap">
                                 <div class="range-wrap">
                                     <ul class="range">
@@ -111,13 +111,19 @@
                                     </li>
                                 </ul>
                             </div>
-                            <input type="number" name="" id="" class="any-amount">
+                            <input type="number" required min="1" max="9999" class="other-amount" placeholder="Another amount">
+                            <div class="payment-choise">
+                                
+                                <label for="monthlyChoice1" class="form-control"><input type="radio" id="monthlyChoice1" name="payment" value="monthly">Monthly</label>
+                                <label for="onceChoice2" class="form-control"><input type="radio" id="onceChoice2" name="payment" checked value="once">Once</label>
+                            </div>
+                            <input type="submit" class="default border-r-25" value="feed a friend now">
+                            <p class="text last">Share with your friends on social networks </p>
+                        </form>
+                        
                         </section>
-                        <a type="button" class="default border-r-25" href="donate.html" class="border-o">feed a friend now</a>
-                    </section>
                 </div>
                
-
             </section>
             <footer id="contact">
                 <div class="wrapper">

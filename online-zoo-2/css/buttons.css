@@ -1,4 +1,4 @@
-button,a[type=button]{
+button,a[type=button],input[type=submit]{
     cursor: pointer;
     border:0;
     font-family: 'Roboto Regular';
@@ -17,6 +17,74 @@ button,a[type=button]{
 button::selection{
     text-decoration: none;
 }
+.payment-choise{
+   display: flex;
+   justify-content: center;
+   margin-top:25px;
+   align-items: center;
+   gap: 50px;
+}
+.form-control{
+    font-family: 'Roboto Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    /* or 22px */
+    color: #333B41;
+    display: flex;
+    width: 84px;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+  
+  
+  .form-control:focus-within {
+    color:#FE9013;
+  }
+  
+
+
+  input[type="radio"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* For iOS < 15 */
+    background-color: var(--form-background);
+    /* Not removed via appearance */
+    margin: 0;
+  
+    font: inherit;
+    color: currentColor;
+    width: 16px;
+    height: 16px;
+    border: 0.1em solid #FE9013;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+  
+    display: grid;
+    place-content: center;
+  }
+  
+  input[type="radio"]::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #fe9013;
+  }
+  
+  input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+
+
+
 .default{
     width: 298px;
     height: 54px;
