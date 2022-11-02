@@ -147,29 +147,59 @@ section.animals-widjet p.text{
     justify-content: space-between;
     align-items: center;
 }
-
-span.roller-icon {
-    height: 10px;
+.range input[type="radio"]{
+    appearance: none;
+    position: relative;
+    border-radius: 50%;
+    background-color: #FFEE2E;
     width: 10px;
-    border-radius: 5px;
-    background: #FFEE2E;
+    height: 10px;
+    transform: translateY(0);
     cursor: pointer;
-    display: inline-block;
 }
-.range li.active{
-    background: url('../img/svg/roller_icon.svg') no-repeat center/contain;
-    height: 40px;
-    width:40px;
+.amount-radio::after{
+    transform: translateY(0);
+    content: "";
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    right: -16px;
+}
+.range input[type="radio"]::before {
+    content: "";
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+  }
+  .amount-radio:checked::after, .amount-radio:checked::before {
+    border: 2px solid #FE9013;
     display: flex;
-    align-items: center;
     justify-content: center;
- }
+    align-items: center;
+}
+ 
 .sum li.active svg path{
     fill:#FE9013;
 }
 .sum li.active span{
     color:#FE9013;
 }
+.payment-choise input[type=radio]{
+    width: 16px;
+    height: 16px;
+    border: 0.1em solid #FE9013;
+}
+.payment-choise input[type=radio]::before{
+    width: 8px;
+    height: 8px;
+    box-shadow: inset 1em 1em #fe9013;
+}
+
 .amount-wrap .sum{
     padding: 0 30px 0px 0px;
     display: flex;
