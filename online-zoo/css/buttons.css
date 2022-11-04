@@ -1,0 +1,41 @@
+button,a[type=button]{
+    cursor: pointer;
+    border:0;
+    font-family: 'Roboto Regular';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+    color: #FFFFFF;  
+}
+button::selection{
+    text-decoration: none;
+}
+.default{
+    width: 298px;
+    height: 54px;
+    background: linear-gradient(113.96deg, #F9804B 1.49%, #FE9013 101.44%);
+                                      
+}
+.ellipse-default{
+    width: 62px;
+    height: 62px;
+    background: linear-gradient(113.96deg, #F9804B 1.49%, #FE9013 101.44%);
+    border-radius: 50%;
+}
+.ellipse-default:hover,.default:hover{
+    background: #E47209;
+}
+.ellipse-default:active,.default:active{
+    background: #4B9200;
+}
+
+.border-r-5{
+    border-radius: 5px;
+}
+.border-r-25{
+    border-radius: 25px; 
+}
