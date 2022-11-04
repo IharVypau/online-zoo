@@ -16,6 +16,6 @@ html{
 }
 main{
     display: grid;
-    grid-template-rows: 80px 390px 1482px 443px;
+    grid-template-rows: 80px 386px 1482px 443px;
     grid-auto-columns: 1600px;
 }

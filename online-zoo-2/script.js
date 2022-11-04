@@ -7,6 +7,8 @@ const toggleClassActive=(className)=>{
     })
 }
 const btnSubmit =document.querySelector('.submit-btn')
+const amount =document.querySelector('.sum')
+const amount_rbtn =document.querySelectorAll('.amount-radio')
 const email=document.getElementById('email');
 email.addEventListener('keyup',()=>{
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)){
@@ -24,4 +26,18 @@ const checkEmail=()=>{
         email.value=""
     }
 }
-console.log('Hello reviewer, if you have any questions or I have some mistakes, please let me know. WhatsApp,Viber,telega - +375296533196, Discord - @IharVypau')
+[...amount.children].forEach(li=>{
+    li.addEventListener('click',()=>{
+        document.querySelector('.active-amount').classList.remove('active-amount')
+        li.classList.add('active-amount')
+        document.querySelector(`.s${li.dataset.amount}`).children.item(0).checked=true
+    })
+})
+amount_rbtn.forEach(el=>{
+    el.addEventListener('click',()=>{
+        document.querySelector('.active-amount').classList.remove('active-amount')
+        document.querySelector(`#l-${el.value}`).classList.add('active-amount')
+    })
+})
+
+console.log('Hello reviewer, if you have any questions or I have some mistakes, please let me know. WhatsApp,Viber,telegram - +375296533196, Discord - IharVypau(@IharVypau)')

@@ -28,9 +28,10 @@
     line-height: 140%;
     /* or 22px */
     color: #FFFFFF;
+    letter-spacing: .03px;
 }
 .wrapper h3.title{
-    padding-top:40px;
+    padding-top:45px;
     color: #FE9013;
     text-transform:capitalize;
 }
@@ -54,6 +55,7 @@
     text-align: center;
     color: #FE9013;
     align-self: center;
+    padding-right: 12px;
 }
 .wrapper .container h4.subtitle{
     font-family: 'Roboto Regular';
@@ -63,7 +65,7 @@
     line-height: 120%;
     /* identical to box height, or 29px */
     color: #333B41;
-    margin-top:20px;
+    margin-top:21px;
 }
 .wrapper .container section.animals-widjet{
     margin-top:60px;
@@ -77,11 +79,16 @@ section.animals-widjet div:nth-child(1){
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 42px 9px 0px 0px;
+}
+section.animals-widjet div:nth-child(3){
+    margin-right: 14px;
 }
 .animals-widjet .x-icon{
     align-self: center;
-    margin-left: 11px;
-    margin-right: 64px;;
+    margin-left: 0px;
+    margin-right: 64px;
+    padding-top: 24px;
 }
 section.animals-widjet p.num{
     font-family: 'Roboto Regular';
@@ -105,7 +112,7 @@ section.animals-widjet p.text{
     color: #333B41;
 }
 .amount-feed-widjet{
-    margin-top: 48px;
+    margin-top: 34px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -118,13 +125,14 @@ section.animals-widjet p.text{
     line-height: 140%;
     /* or 22px */
     color: #000000;
+    padding-left: 5px;
 }
 .amount-wrap {
     width: 100%; 
     margin-top:17px;
 }
 .amount-feed-widjet p.last{
-    margin-top: 30px;
+    margin-top: 20px;
     align-self: center;
 }
 
@@ -160,21 +168,21 @@ section.animals-widjet p.text{
 .amount-radio::after{
     transform: translateY(0);
     content: "";
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     position: absolute;
-    top: -16px;
-    right: -16px;
+    top: -15px;
+    right: -15px;
 }
 .range input[type="radio"]::before {
     content: "";
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -7px;
+    right: -7px;
   }
   .amount-radio:checked::after, .amount-radio:checked::before {
     border: 2px solid #FE9013;
@@ -182,11 +190,13 @@ section.animals-widjet p.text{
     justify-content: center;
     align-items: center;
 }
- 
-.sum li.active svg path{
+.sum li{
+    cursor: pointer;
+}
+.sum li.active-amount svg path{
     fill:#FE9013;
 }
-.sum li.active span{
+.sum li.active-amount span{
     color:#FE9013;
 }
 .payment-choise input[type=radio]{
@@ -201,9 +211,8 @@ section.animals-widjet p.text{
 }
 
 .amount-wrap .sum{
-    padding: 0 30px 0px 0px;
+    padding: 6px 24px 0px 0px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top:6px;
     
@@ -211,7 +220,15 @@ section.animals-widjet p.text{
 .sum li{
     display: flex;
     align-items: center;
+    column-gap: 3px;
 }
+.sum li:nth-child(2){ margin-left: 58px; }
+.sum li:nth-child(3){ margin-left: 58px; }
+.sum li:nth-child(4){ margin-left: 60px; }
+.sum li:nth-child(5){ margin-left: 73px; }
+.sum li:nth-child(6){ margin-left: 73px; }
+.sum li:nth-child(7){ margin-left: 73px; }
+.sum li:nth-child(8){ margin-left: 88px; }
 .sum span{
     font-family: 'Roboto Regular';
     font-style: normal;
@@ -222,29 +239,52 @@ section.animals-widjet p.text{
     text-transform: uppercase;
     color: #333B41;
 }
+.payment-choise{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    align-items: center;
+    gap: 50px;
+    margin-right: 12px;
+ }
+ .form-control{
+     font-family: 'Roboto Regular';
+     font-style: normal;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 140%;
+     /* or 22px */
+     color: #333B41;
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     cursor: pointer;
+ }
+
 input.other-amount{
-    margin-top:50px;
+    margin-top: 50px;
     height: 54px;
     width: 268px;
     border: 2px solid #929699;
-    padding: 0px 20px 0px 10px;
+    padding: 0px 20px 0px 8px;
     background-color: rgba(255, 255, 255, 0.1);
-    background: url('../img/svg/dollar-gray.svg') no-repeat center right 10px;
+    background: url(../img/svg/dollar-gray.svg) no-repeat center right 8px;
     border-radius: 3px;
     font-family: 'Roboto Regular';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 140%;
-    /* or 22px */
     color: #929699;
+    box-sizing: border-box;
     align-self: center;
 }
 
 input[type=submit]{
-    margin-top: 31px;
+    margin-top: 29px;
     align-self: center;
     border: none;
+    margin-left: 8px;
 }
 
 input::-webkit-outer-spin-button,
@@ -255,4 +295,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+div.info .author {
+    gap: 0px;
 }
