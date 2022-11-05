@@ -12,12 +12,12 @@
         <main>
             <header>
                 <div class="wrapper">
-                    <h1 class="logo"><a href="#about" onclick="toggleClassActive('about')">PetStory online</a></h1>
+                    <h1 class="logo"><a href="./index.html" onclick="toggleClassActive('about')">PetStory online</a></h1>
                     <ul class="links">
                         <li class="active about"><a href="#" onclick="toggleClassActive('about')">About</a></li>
                         <li class="map"><a onclick="toggleClassActive('map')">Map</a></li>
                         <li class="zoos"><a onclick="toggleClassActive('zoos')">Zoos</a> </li>
-                        <li class="donate"><a href="donate.html" onclick="toggleClassActive('donate')">Donate</a></li>
+                        <li class="donate"><a href="pages/donate/index.html" onclick="toggleClassActive('donate')">Donate</a></li>
                         <li class="contact"><a onclick="toggleClassActive('contact')" href="#contact">Contact us</a></li>
                     </ul>
                     <a href="https://www.figma.com/file/ypzT9idgAILaSRVRmDAJxn/online-zoo-3-weeks" target="_blank" class="disigned">Designed by ©</a>
@@ -165,7 +165,7 @@
                     <h4>We know the animals bring you joy, and in these extraordinary times, we’re glad.</h4>
                     <h5>During a time when the COVID-19 epidemic is touching all of our lives, we’re proud and glad that people around the world find joy in PetStory.</h5>
                     <p>Even though the zoo has reopened, we need you now more than ever to help us deal with these problems. Please consider a gift to our 
-                        <a href="donate.html" class="border-o">Emergency Support Fund</a> . </p>
+                        <a href="pages/donate/index.html" class="border-o">Emergency Support Fund</a> . </p>
                     <h3>How it works</h3>
                     <ul class="widjets">
                         <li class="widjet">
@@ -189,7 +189,7 @@
                             <p>Your favourite animal gets delicious dish</p>
                         </li>
                     </ul>
-                    <a type="button" class="default border-r-25" href="donate.html" class="border-o">feed a friend now</a>
+                    <a type="button" class="default border-r-25" href="pages/donate/index.html" class="border-o">feed a friend now</a>
                 </section>
             </section>
             <section class="section-5">
@@ -294,19 +294,21 @@
             <footer id="contact">
                 <div class="wrapper">
                     <ul class="footer-logo-subscribe">
-                        <li class="logo"><a href="#about" onclick="toggleClassActive('about')">PetStory online</a></li>
+                        <li class="logo"><a href="index.html" onclick="toggleClassActive('about')">PetStory online</a></li>
                         <li>
                             <ul class="subscribtion">
                                 <li class="subtitle">Subscribe to our news</li>
                                 <li class="form-subscription">
-                                    <input type="email" name="" id="email"placeholder="Enter your email" >
-                                    <button type="submit" class="submit-btn" onclick="checkEmail()">Submit</button>
+                                    <form>
+                                        <input type="email" name="" id="email"placeholder="Enter your email" >
+                                        <button type="submit" class="submit-btn" onclick="checkEmail()">Submit</button>
+                                    </form>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                     <div class="btn-donate">
-                        <a type="button" class="default border-r-5" href="donate.html" class="border-o">donate for volunteers</a>
+                        <a type="button" class="default border-r-5" href="pages/donate/index.html" class="border-o">donate for volunteers</a>
                     </div>
                     <div class="info">
                         <ul>
@@ -320,7 +322,7 @@
                             </li>
                             <li class="links">
                                 <ul>
-                                    <li class="active about"><a href="#about" onclick="toggleClassActive('about')">About</a></li>
+                                    <li class="active about"><a href="index.html" onclick="toggleClassActive('about')">About</a></li>
                                     <li class="map"><a onclick="toggleClassActive('map')">Map</a></li>
                                     <li class="zoos"><a onclick="toggleClassActive('zoos')">Zoos</a> </li>
                                     <li class="contact"><a onclick="toggleClassActive('contact')">Contact us</a></li>

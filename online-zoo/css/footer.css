@@ -34,7 +34,7 @@ ul.subscribtion{
     line-height: 120%;
     /* identical to box height, or 29px */
 }
-.subscribtion .form-subscription{
+.subscribtion .form-subscription form{
     display: flex;
     gap: 10px;
     margin-top: 13px;

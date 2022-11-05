@@ -12,7 +12,7 @@
         <main>
             <header>
                 <div class="wrapper">
-                    <h1 class="logo"><a href="#about" onclick="toggleClassActive('about')">PetStory online</a></h1>
+                    <h1 class="logo"><a href="../../index.html" onclick="toggleClassActive('about')">PetStory online</a></h1>
                     <ul class="links">
                         <li class="about"><a href="../../index.html" onclick="toggleClassActive('about')">About</a></li>
                         <li class="map"><a onclick="toggleClassActive('map')">Map</a></li>
@@ -113,9 +113,8 @@
                             </div>
                             <input type="number" required min="1" max="9999" class="other-amount" placeholder="Another amount">
                             <div class="payment-choise">
-                                
-                                <label for="monthlyChoice1" class="form-control"><input type="radio" id="monthlyChoice1" name="payment" value="monthly">Monthly</label>
-                                <label for="onceChoice2" class="form-control"><input type="radio" id="onceChoice2" name="payment"  value="once">Once</label>
+                                <input type="radio" id="monthlyChoice1" name="payment" value="monthly"><label for="monthlyChoice1" class="form-control">Monthly</label>
+                                <input type="radio" id="onceChoice2" name="payment"  value="once" checked="true" ><label for="onceChoice2" class="form-control">Once</label>
                             </div>
                             <input type="submit" class="default border-r-25" value="feed a friend now">
                             <p class="text last">Share with your friends on social networks </p>
@@ -128,13 +127,15 @@
             <footer id="contact">
                 <div class="wrapper">
                     <ul class="footer-logo-subscribe">
-                        <li class="logo"><a href="#about" onclick="toggleClassActive('about')">PetStory online</a></li>
+                        <li class="logo"><a href="../../index.html" onclick="toggleClassActive('about')">PetStory online</a></li>
                         <li>
                             <ul class="subscribtion">
                                 <li class="subtitle">Subscribe to our news</li>
                                 <li class="form-subscription">
-                                    <input type="email" name="" id="email"placeholder="Enter your email" >
-                                    <button type="submit" class="submit-btn" onclick="checkEmail()">Submit</button>
+                                    <form>
+                                        <input type="email" name="" id="email"placeholder="Enter your email" required>
+                                        <button type="submit" class="submit-btn" onclick="checkEmail()">Submit</button>
+                                    </form>
                                 </li>
                             </ul>
                         </li>
@@ -154,7 +155,7 @@
                             </li>
                             <li class="links">
                                 <ul>
-                                    <li class="active about"><a href="#about" onclick="toggleClassActive('about')">About</a></li>
+                                    <li class="active about"><a href="../../index.html" onclick="toggleClassActive('about')">About</a></li>
                                     <li class="map"><a onclick="toggleClassActive('map')">Map</a></li>
                                     <li class="zoos"><a onclick="toggleClassActive('zoos')">Zoos</a> </li>
                                     <li class="contact"><a onclick="toggleClassActive('contact')">Contact us</a></li>
