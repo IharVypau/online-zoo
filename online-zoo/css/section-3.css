@@ -69,20 +69,20 @@
     background: rgba(0,0,0,.6);
 }
 .card-img:hover > img.scale{
-    transform: scale(1.06);
+    transform: scale(1.1);
 }
 .card-img > .title-img.slide-up{
     transform: translateY(100%);
  }
 .card-img:hover > .title-img.slide-up{
    transform: translateY(0);
-   transform: scale(1.06);
+   transform: scale(1);
 }
 .card-img:hover img{
-   filter:grayscale(.5);
+   filter:grayscale(.6);
 }
 .card-img:hover {
-    transform: scale(1.06);
+    transform: scale(1);
 }
 .title-img,.card img{
     transition: 300ms ease-in;

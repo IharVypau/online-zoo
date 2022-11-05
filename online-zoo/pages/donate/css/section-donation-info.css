@@ -165,6 +165,19 @@ section.animals-widjet p.text{
     transform: translateY(0);
     cursor: pointer;
 }
+.range input[type="radio"]:hover{
+    background-color:#fe9013;
+}
+.range input[type="radio"]:hover{
+    background-color:#fe9013;
+}
+.sum li:hover{
+    color:#fe9013;
+} 
+.range input[type="radio"]:active{
+    background-color: #4B9200;
+}
+
 .amount-radio::after{
     transform: translateY(0);
     content: "";
@@ -203,6 +216,10 @@ section.animals-widjet p.text{
     width: 16px;
     height: 16px;
     border: 0.1em solid #FE9013;
+    margin-right: 10px;
+}
+.payment-choise input[type=radio]:checked + label {
+    color: #FE9013;
 }
 .payment-choise input[type=radio]::before{
     width: 8px;
@@ -244,9 +261,15 @@ section.animals-widjet p.text{
     justify-content: center;
     margin-top: 25px;
     align-items: center;
-    gap: 50px;
     margin-right: 12px;
  }
+ /* .payment-choise label:hover{
+    color: #fe9013;
+ } */
+ .payment-choise>label:nth-child(2){
+    margin-right: 50px;
+ }
+
  .form-control{
      font-family: 'Roboto Regular';
      font-style: normal;
