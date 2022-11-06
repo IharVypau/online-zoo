@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+/*-- VARIABLES CSS--*/
+/*Colores*/
+:root{
+    --first-color: #E3F8FF;
+    --second-color: #DCFAFB;
+    --third-color: #FFE8DF;
+    --accent-color: #FF5151;
+    --dark-color: #161616;
+}
+
+/*Tipografia responsive*/
+:root{
+    --body-font: 'Open Sans';
+    --h1-font-size: 1.5rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: 0.938rem;
+    --smaller-font-size: 0.75rem;
+}
+@media screen and (min-width: 768px){
+    :root{
+        --h1-font-size: 2rem;
+        --normal-font-size: 1rem;
+        --smaller-font-size: 0.813rem;
+    }
+}
+
+/*-- BASE --*/
+*,::after,::before{
+    box-sizing: border-box;
+}
+
+h1{
+    font-size: var(--h1-font-size);
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
+a{
+    text-decoration: none;
+}
+body {
+    background-color: rgb(255, 255, 255);
+    color: var(--dark-color);
+    font-family: var(--body-font);
+    margin: 0px;
+}
+
+.main {
+    padding: 8.5rem 2.5rem 2.5rem;
+}
+.header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0px auto;
+    padding: 0px 1rem;
+}
+.title-shop {
+    position: relative;
+    text-transform: uppercase;
+    width: 300px;
+}
+.title-shop::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 72px;
+    height: 2px;
+    background-color: var(--dark-color);
+    margin-left: .25rem;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.user-info .card__icon {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    gap: 5px;
+}
+
+.bd-grid {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: 300px;
+    grid-auto-flow: dense;
+    max-width: 1400px;
+    align-items: center;
+    gap: 2rem;
+    margin: 0px auto;
+}
+header {
+    position: fixed;
+    width: 100%;
+    font-weight: 500;
+    font-size: var(--h1-font-size);
+    line-height: 140%;
+    min-height: 80px;
+    padding-top: 14px;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    border-bottom: 1px solid rgb(213, 219, 219);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    padding: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+article {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(213, 219, 219);
+    border-image: initial;
+}
+.card__img {
+    height: 60%;
+    transition: all 0.2s ease 0s;
+}
+img {
+    max-width: 100%;
+    height: 100%;
+}
+
+.card__name {
+    position: absolute;
+    left: -30%;
+    top: 0px;
+    width: auto;
+    height: 100%;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    background-color: var(--dark-color);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease 0s;
+}
+.card__icon{
+    font-size: 1.5rem;
+    color: var(--dark-color);
+}
+.card__icon:hover{
+    color: var(--accent-color);
+}
+.card__precis{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    transition: .5s;
+}
+.card__preci{
+    display: block;
+    text-align: center;
+}
+.card__preci--before{
+    font-size: var(--smaller-font-size);
+    color: var(--accent-color);
+    margin-bottom: .25rem;
+}
+.card__preci--now{
+    font-size: var(--h3-font-size);
+    font-weight: bold;
+}
+.card_authors{
+    font-style: italic;
+}
+.card_title{
+    font-weight: 600;
+}
+.card_title, .card_authors{
+    margin:0;
+    font-size: var(--smaller-font-size);
+    text-align: center;
+}
+/*Move left*/
+a.card__icon{
+    cursor: pointer;
+}
+.card:hover{
+    box-shadow: 0 .5rem 1rem #D1D9E6;
+}
+.card:hover .card__name{
+    left: 0;
+}
+.card:hover .card__img{
+    
+    margin-left: 3.5rem;
+}
+.card:hover .card_title {
+    margin-left: 3rem; 
+}
+.card:hover .card_authors {
+    margin-left: 3rem; 
+}
+.card:hover .card__precis {
+    margin-left: 3.5rem;
+    padding: 0 1.5rem;
+}
+
+/*-- MEDIA QUERIES --*/
+@media screen and (min-width: 1400px){
+    body{
+        margin: 0 0 0;
+    }
+    .title-shop{
+        margin: 0;
+    }
+    .bd-grid{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
