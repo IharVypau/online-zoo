@@ -14,33 +14,39 @@
             <h1 class="title-shop">books shop</h1>
             <nav class="nav-panel">
                 <div class="user-info">
+                    <button class="close-popup" onclick="openPopup();">
+                        Open
+                    </button>
+                   
                     <a href="" class="card__icon cart"><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
-                    <a href="" class="card__icon"><ion-icon name="heart-outline"></ion-icon><span>0</span></a>
+                    <a href="" class="card__icon"><ion-icon name="heart-outline"></ion-icon><span class="like_items">0</span></a>
                 </div>
             </nav>
         </div>
     </header>
     <main class="main bd-grid" id="container">
-       
-       
+        
     </main>
+
+    <section class="modal container"id="popup">
+        <div class="popup_content" >
+                <div class="close-popup" title="Close">
+                    <i class='bx bx-x'></i>
+                </div>
+                <img src="" alt="img" class="popup_img">
+                
+                <h2 class="popup_title">Good Job!</h2>
+                <h3 class="popup_authors">Authors!</h3>
+                <p class="popup_description">Click the button to close</p>
+
+                <button class="close-popup" onclick="closePopup();">
+                    Close
+                </button>
+        </div>
+       
+    </section>
     <!--ICONS-->
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
 </body>
 </html>
-<!-- <article class="card">
-    <div class="card__img">
-        <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/black.jpg">
-    </div>
-    <div class="card__name"><p class="show_more">SHOW MORE</p></div>
-    <p class="card_authors">David A. Black</p>
-    <p class="card_title">Ruby for Rails</p>
-    <div class="card__precis card__preci--now">
-        <a class="card__icon"><ion-icon name="cart-outline" role="img" class="md hydrated" aria-label="cart outline"></ion-icon></a>
-        <div class="card_price">
-            <span>$990.00</span>
-        </div>
-        <a class="card__icon"><ion-icon name="heart-outline" role="img" class="md hydrated" aria-label="heart outline"></ion-icon></a>
-    </div>
-</article> -->

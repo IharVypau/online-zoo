@@ -6,6 +6,7 @@
     --first-color: #E3F8FF;
     --second-color: #DCFAFB;
     --third-color: #FFE8DF;
+    --green-color: #4B9200;
     --accent-color: #FF5151;
     --dark-color: #161616;
 }
@@ -100,9 +101,12 @@ body {
     align-items: center;
     gap: 2rem;
     margin: 0px auto;
+    padding: 0;
+    margin-top:100px;
 }
 header {
     position: fixed;
+    top:0;
     width: 100%;
     font-weight: 500;
     font-size: var(--h1-font-size);
@@ -120,6 +124,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     height: 300px;
     padding: 1rem;
     border-radius: 1rem;
@@ -135,6 +140,7 @@ article {
 .card__img {
     height: 60%;
     transition: all 0.2s ease 0s;
+    user-select: none;
 }
 img {
     max-width: 100%;
@@ -183,8 +189,8 @@ img {
     font-size: var(--h3-font-size);
     font-weight: bold;
 }
-.card_authors{
-   
+a.selected {
+    color: var(--accent-color);
 }
 .card_title{
     font-weight: 600;
@@ -193,6 +199,9 @@ img {
     margin:0;
     font-size: var(--smaller-font-size);
     text-align: center;
+}
+.card_title{
+    font-size: var(--normal-font-size);
 }
 /*Move left*/
 a.card__icon{
@@ -212,7 +221,8 @@ a.card__icon{
     margin-left: 3rem; 
 }
 .card:hover .card_authors {
-    margin-left: 3rem; 
+    /* margin-left: 3rem;  */
+    display: none;
 }
 .card:hover .card__precis {
     margin-left: 3.5rem;
@@ -234,3 +244,38 @@ a.card__icon{
 }
 
 
+/*-- MODAL POPUP --*/
+.container{
+    width: 100%;
+    height: 100vh;
+   background-color: hsla(230, 18%, 75%, .8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    visibility: hidden;
+}
+.popup_content{
+    width: 400px;
+    background: #fff;
+    border-radius: 1rem;
+    position: absolute;
+    transform: translate(-50%,-50%) scale(0.1);
+    text-align: center;
+    padding: 1rem;
+    color: #333;
+    transition: transform 0.2s, top 0.2s;
+}
+.popup_open{
+    visibility:visible;
+    transform: scale(1);
+    z-index: 1;
+}
+.popup_content img{
+    box-shadow: 0 .5rem 1rem #D1D9E6;
+}
+.popup_content h2{
+    --normal-font-size
+}
