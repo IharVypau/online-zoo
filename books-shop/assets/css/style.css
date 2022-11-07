@@ -22,7 +22,7 @@
     :root{
         --h1-font-size: 2rem;
         --normal-font-size: 1rem;
-        --smaller-font-size: 0.813rem;
+        --smaller-font-size: 0.9rem;
     }
 }
 
@@ -168,7 +168,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    transition: .5s;
+    transition: .3s;
 }
 .card__preci{
     display: block;
@@ -184,7 +184,7 @@ img {
     font-weight: bold;
 }
 .card_authors{
-    font-style: italic;
+   
 }
 .card_title{
     font-weight: 600;

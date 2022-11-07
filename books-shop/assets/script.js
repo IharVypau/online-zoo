@@ -1,64 +1,97 @@
-function init() {
-    fetch('https://rolling-scopes-school.github.io/iharvypau-JSFEEN2022Q3/books-shop/books.json')
+
+
+  class CardsServise{
+    constructor(cardComponent){
+      this.cards = []
+      this.fragment= document.createDocumentFragment();
+      this.cardComponent=cardComponent
+    }
+
+    loadItems(){
+      fetch('./assets/books.json')
       .then(response => response.json())
       .then(booksJSON => {
-          booksJSON.forEach(book => {
-            const container = document.getElementById('container');
-       
-          const card = document.createElement('article')
-          card.classList.add('card');
-          const card_img= document.createElement('div')
-          card_img.classList.add('card__img');
-          const card_info= document.createElement('div')
-          card_info.classList.add('card__precis','card__preci--now');
-          const card_name= document.createElement('div')
-          card_name.classList.add('card__name');
-          const img=document.createElement('img')
-          img.setAttribute('src',book.thumbnailUrl)
-          card_img.appendChild(img)
-          const more=document.createElement('p');
-          more.innerText="SHOW MORE";
-          more.classList.add('show_more')
-          card_name.appendChild(more);
-          const link_1 = document.createElement('a');
-          link_1.className = 'card__icon';
-          const icon_like= document.createElement('ion-icon')
-          icon_like.setAttribute( 'name',"cart-outline");
-          
-          const link_2 = document.createElement('a');
-          link_2.className = 'card__icon';
-          const icon_heart= document.createElement('ion-icon')
-          icon_heart.setAttribute( 'name',"heart-outline");
+        this.renderBooks(booksJSON);
+        this.cards=booksJSON;
+      })
+    }
 
-          link_1.appendChild(icon_like);
-          link_2.appendChild(icon_heart);
-          
-          
-
-          const card_price= document.createElement('div')
-          card_price.classList.add('card_price');
-          const card_title=document.createElement('p');
-          const card_authors=document.createElement('p');
-          card_title.classList.add('card_title')
-          card_authors.classList.add('card_authors')
-          card_title.innerText=book.title;
-          card_authors.innerHTML=book.authors.join(', ')
-
-          const card_price_span= document.createElement('span')
-          card_price_span.innerText='$990.00';
-          card_info.appendChild(link_1)
-          card_info.appendChild(card_price)
-          card_info.appendChild(link_2)
-          card_price.appendChild(card_price_span)
-          card.appendChild(card_img)
-          card.appendChild(card_name)
-          card.appendChild(card_authors)
-          card.appendChild(card_title)
-          card.appendChild(card_info)
-          container.appendChild(card)
-        });
-        
-  
-      });
+    renderBooks(books){
+      books.forEach((book,index) => {
+        this.fragment.appendChild(this.cardComponent.generateCard(book,index))
+      })
+      const cont =document.getElementById("container")
+      cont.appendChild(this.fragment);
+      cont.addEventListener('click',(event)=>{
+        const el = event.target.parentNode
+        if(el.dataset.cartIndex){
+          userServise.orderLIst.add(el.dataset.cartIndex)
+          this.updateData();
+        }
+      },false);
+    }
+    updateData(){
+      document.querySelector('.cart_items').innerText=userServise.orderLIst.size
+    }
   }
-  init();
+
+  class UserServise{
+    constructor(){
+      this.orderLIst=new Set()
+      this.favouritsList=[]
+    }
+  }
+
+  class CardComponent{
+    
+    generateCard(book,index){
+      const card = this.createElement('article','card')
+      const card_img = this.createElement('div','card__img');
+      const card_info = this.createElement('div','card__precis card__preci--now');
+      const card_name = this.createElement('div','card__name');
+      const img = this.createElement('img','','',{src:book.thumbnailUrl})
+      const more_btn = this.createElement('p','show_more',"SHOW MORE");
+      const link_1 = this.createElement('a','card__icon','',{'data-cart-index':index});
+      const icon_like= this.createElement('ion-icon','','',{name:'cart-outline'})
+      const link_2 = this.createElement('a','card__icon','',{'data-cart-index':index});
+      const icon_heart= this.createElement('ion-icon','','',{name:'heart-outline'})
+      const card_price= this.createElement('div','card_price')
+      const card_title=this.createElement('p','card_title',book.title);
+      const card_authors=this.createElement('p','card_authors',book.authors.join(', '));
+      const card_price_span= this.createElement('span','','$990.00')
+      
+      card_img.appendChild(img)
+      card_name.appendChild(more_btn);
+      link_1.appendChild(icon_like);
+      link_2.appendChild(icon_heart);
+      card_info.appendChild(link_1)
+      card_info.appendChild(card_price)
+      card_info.appendChild(link_2)
+      card_price.appendChild(card_price_span)
+      card.appendChild(card_img)
+      card.appendChild(card_name)
+      card.appendChild(card_authors)
+      card.appendChild(card_title)
+      card.appendChild(card_info)
+     return card;
+    }
+    
+    createElement(el,class_name="",text="",atrrs={}){
+      const element= document.createElement(el)
+      element.className=class_name;
+      element.innerHTML=text
+      for(let attr in atrrs){
+        element.setAttribute(attr,atrrs[attr])
+      }
+      return element;
+    }
+
+    addToFavourites(){ }
+    addToCart(){}
+
+  }
+  const service = new CardsServise(new CardComponent())
+  const userServise = new UserServise()
+  service.loadItems();
+
+  
