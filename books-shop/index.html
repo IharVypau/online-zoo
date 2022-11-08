@@ -14,9 +14,6 @@
             <h1 class="title-shop">books shop</h1>
             <nav class="nav-panel">
                 <div class="user-info">
-                    <button class="close-popup" onclick="openPopup();">
-                        Open
-                    </button>
                    
                     <a href="" class="card__icon cart"><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
                     <a href="" class="card__icon"><ion-icon name="heart-outline"></ion-icon><span class="like_items">0</span></a>
@@ -25,7 +22,36 @@
         </div>
     </header>
     <main class="main bd-grid" id="container">
-        
+
+        <section class="book_list_wrapper">
+            <h2 class="heading">Your Order List</h2>
+            <h2 class="heading">Your Favaurite List</h2>
+            <div class="book-list">
+                <div>#</div>
+                <div>Item</div>
+                <div>Amount</div>
+                <div>Actions</div>
+                <div>Total</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                
+                <div>3</div>
+                <div>12</div>
+                <div>13</div>
+                <div>14</div>
+                <div>15</div>
+                <h3 class="heading">Total:</h3>
+            </div>
+        </section>
+
     </main>
 
     <section class="modal container"id="popup">
@@ -39,11 +65,25 @@
                 <h3 class="popup_authors">Authors!</h3>
                 <p class="popup_description">Click the button to close</p>
 
-                <button class="close-popup" onclick="closePopup();">
-                    Close
+                <button id="close-reader" onclick="closePopup()">
+                    <div class="close-reader-text">Close</div>
+                    <svg id="close-x" width="20px" height="20px" viewBox="0 0 20 20">
+                        <title>Close</title>
+                        <g stroke="#000" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Icon_Close"  stroke="#000">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <line x1="1.16116524" y1="18.8388348" x2="18.8388348" y2="1.16116524" id="Stroke-1"></line>
+                                            <line x1="1.16116524" y1="1.16116524" x2="18.8388348" y2="18.8388348" id="Stroke-3"></line>
+                                        </g>
+                                    </g>
+                            </g>
+                        </g>
+                        </g>
+                    </svg>
                 </button>
         </div>
-       
     </section>
     <!--ICONS-->
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

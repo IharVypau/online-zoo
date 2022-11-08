@@ -114,13 +114,16 @@
   }
   const service = new CardsServise(new CardComponent())
   const userServise = new UserServise()
-  service.loadItems();
+  //service.loadItems();
  
-  function openPopup(title){
+  function openPopup(index){
     let popup=document.getElementById('popup');
     popup.classList.add('popup_open')
     popup.children[0].classList.add('popup_open')
-    document.querySelector('.popup_title').innerText=title;
+    document.querySelector('.popup_title').innerText=service.cards[index].title;
+    document.querySelector('.popup_authors').innerText=service.cards[index].authors;
+    document.querySelector('.popup_description').innerText=service.cards[index].shortDescription;
+    document.querySelector('img.popup_img').src=service.cards[index].thumbnailUrl;
   }
  function closePopup(){
    let popup=document.getElementById('popup');
