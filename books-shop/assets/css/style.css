@@ -64,6 +64,8 @@ body {
     position: relative;
     text-transform: uppercase;
     width: 300px;
+    user-select: none;
+    cursor: default;
 }
 .title-shop::after{
     content: '';
@@ -98,7 +100,7 @@ body {
     grid-auto-rows: 300px;
     grid-auto-flow: dense;
     max-width: 1400px;
-    align-items: center;
+    /* align-items: center; */
     gap: 2rem;
     /* margin: 0px auto;
     padding: 0; */
@@ -304,16 +306,94 @@ a.card__icon{
     margin-right: 8px;
 }
 
-section.book_list_wrapper{
-    /* margin-top:7rem; */
-}
+
+
+
 .book-list{
+    
+}
+.book-list>div{
+    border-bottom: 1px solid black;
+    background-color: #fff;
+    padding: 0.5rem;
+}
+
+
+.list_wrapper {
+    max-width: 75rem;
+    width: 100%;
+    margin: 0 auto;
+    visibility: hidden;
+    display: none;
+  }
+  section.showLists{
+    visibility: visible;
+    display: block;
+  }
+  .tabs {
+    position: relative;
+    margin: 3rem 0;
+    background: #FFF;
+    display:flex;
+  }
+  .tabs>h3{
+    cursor: pointer;
+    user-select: none;
+    flex-grow: 1;
+    text-align: right;
+  }
+  
+  .tab-switch {
+    display: none;
+  }
+  .tab-label {
+    position: relative;
+    display: block;
+    line-height: 3rem;
+    height: 3.3rem;
+    padding: 0 1.618em;
+    background: #fff;
+    border: 0.125rem solid  var(--dark-color);
+    color: var(--dark-color);
+    cursor: pointer;
+    top: 0;
+    transition: all 0.25s;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .tab-label:hover {
+    /* top: -0.25rem;
+    transition: top 0.25s; */
+  }
+  .tab-content {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 3.2rem;
+    left: 0;
+    padding: 1.618rem;
+    background:  #fff;
+    color: var(--dark-color);
+    opacity: 0;
+    transition: all 0.35s;
+    border: 0.125rem solid  var(--dark-color);
+  }
+  .tab-content .book-list{
     display: grid;
     grid-template-columns: 5rem 1fr repeat(3, minmax(2rem, 1fr));
     grid-auto-rows: minmax(4rem,1fr);
     row-gap: 1px;
-}
-.book-list>div{
-    border-bottom: 1px solid black;
-    padding: 0.5rem;
-}
+  }
+  .tab-switch:checked + .tab-label {
+    background: var(--dark-color);
+    color:  #fff;
+    border-bottom: 0;
+    /* transition: all 0.35s;
+     z-index: 1;
+    top: -0.0625rem; */ 
+  }
+  .tab-switch:checked + label + .tab-content {
+    z-index: 2;
+    opacity: 1;
+    transition: all 0.35s;
+  }

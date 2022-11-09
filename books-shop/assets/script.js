@@ -1,10 +1,57 @@
 
+class Book{
+  constructor(id,title, description,authors, imgUrl,price){
+    this.id=id
+    this.title=title
+    this.description=description
+    this.authors=authors
+    this.imgUrl=imgUrl
+    this.price=price
+    this._amount=0
+    this.isLiked=false
+  }
+  set like(like=false){
+    this.isLiked = like;
+  }
+  get like(){
+    return this.isLiked
+  }
+
+  set amount(amount){
+    this._amount = amount;
+  }
+  get amount(){
+    return this._amount
+  }
+}
+
+
+class LayoutComponent{
+  constructor(){
+  }
+  generateElement(el,class_name="",text="",atrrs={}){
+    const element= document.createElement(el)
+    element.className=class_name;
+    element.innerHTML=text
+    for(let attr in atrrs){
+      element.setAttribute(attr,atrrs[attr])
+    }
+    return element;
+  }
+  generateList(list){
+    list.forEach(item=>{
+      
+    })
+  }
+}
 
   class CardsServise{
-    constructor(cardComponent){
-      this.cards = []
+    constructor(userService,cardComponent=null){
+      this.cardsHTML = []
+      this.cards =new Map()
       this.fragment= document.createDocumentFragment();
-      this.cardComponent=cardComponent
+      this.cardComponent=cardComponent;
+      this.userService=userService;
     }
 
     loadItems(){
@@ -12,60 +59,103 @@
       .then(response => response.json())
       .then(booksJSON => {
         this.renderBooks(booksJSON);
-        this.cards=booksJSON;
+        //this.cards=booksJSON;
       })
+    }
+    reRenderBooks(){
+     this.cardsHTML.forEach((card)=>{
+      this.fragment.appendChild(card)
+     })
+      this.content.appendChild(this.fragment)
     }
 
     renderBooks(books){
+      this.content = document.getElementById("container")
       books.forEach((book,index) => {
-        this.fragment.appendChild(this.cardComponent.generateCard(book,index))
+        const bookObj= new Book(book.isbn,book.title,book.shortDescription,book.authors,book.thumbnailUrl,'90$')
+        const card = this.cardComponent.generateCard(book,book.isbn)
+        this.cardsHTML.push(card)
+        this.fragment.appendChild(card)
+        this.cards.set(book.isbn,bookObj)
       })
-      const cont =document.getElementById("container")
-      cont.appendChild(this.fragment);
-      cont.addEventListener('click',(event)=>{
-        const el = event.target.parentNode
-        switch (el.dataset.icon) {
-          case "cart":{
-            if(!userServise.orderLIst.has(el.dataset.index)){
-              userServise.orderLIst.add(el.dataset.index);
-              el.classList.add('selected')
-            }else{
-              userServise.orderLIst.delete(el.dataset.index)
-              el.classList.remove('selected')
-            }
-            break;
-          }
-          case "heart":{
-            if(!userServise.favouritsList.has(el.dataset.index)){
-              userServise.favouritsList.add(el.dataset.index);
-              el.classList.add('selected')
-            }else{
-              userServise.favouritsList.delete(el.dataset.index)
-              el.classList.remove('selected')
-            }
-            break;
-          }
-          default:
-            break;
-        }
+      this.content.appendChild(this.fragment);
+      this.content.addEventListener('click',(event)=>{
         this.updateData()
+        
       },false);
     }
+
     updateData(){
-      document.querySelector('.cart_items').innerText=userServise.orderLIst.size
-      document.querySelector('.like_items').innerText=userServise.favouritsList.size
+      document.querySelector('.cart_items').innerText=this.userService.orderList.size
+      document.querySelector('.like_items').innerText=this.userService.favouritsList.size
+    }
+    
+    showBookLists(){
+      this.content.innerHTML="";
+      const myBooks =document.getElementById('book-list')
+      myBooks.classList.add('showLists');
+      this.content.appendChild(myBooks)
+      this.cardComponent.generateUserLists()
+    }
+
+    backToCatalog(){
+      const myBooks =document.getElementById('book-list')
+      myBooks.classList.remove('showLists')
+      this.content.innerHTML="";
+      this.reRenderBooks()
+      document.body.appendChild(myBooks)
+    }
+    setHandler(el,event_type,fn,args){
+      el.addEventListener(event_type,fn.bind(null,el,args,this,this.userService))
     }
   }
 
   class UserServise{
     constructor(){
-      this.orderLIst=new Set()
-      this.favouritsList=new Set()
+      this.orderList = new Map();
+      this.favouritsList=new Map();
+    }
+    handleOrder(el,id,cardService,userServise){
+      const book = cardService.cards.get(id)
+      userServise.orderList.has(id) ?  userServise.removeBookfromOrder(book, id) :  userServise.addBookToOrder(book, id);
+      el.classList.toggle('selected');
+    }
+
+    handleLike(el,id,cardService,userServise){
+      let book = cardService.cards.get(id)
+      userServise.favouritsList.has(id) ?  userServise.removeLike(book, id) :  userServise.addLike(book, id);
+      el.classList.toggle('selected');
+    }
+
+    addBookToOrder(book, id){
+      book.amount=1
+      this.orderList.set(id,book)
+    }
+    removeBookfromOrder(book, id){
+      book.amount=0
+      this.orderList.delete(id)
+    }
+    
+    addLike(book,id){
+      book.like=true;
+      this.favouritsList.set(id,book)
+    }
+    removeLike(book,id){
+      book.like=false;
+      this.favouritsList.delete(id)
+    }
+    
+    setAmount(amount,id){
+      let book = this.cardService.cards.get(id)
+      book.amount=amount;
     }
   }
 
   class CardComponent{
-    
+    constructor(cardsService,userServise){
+      this.cardsService=cardsService
+      this.userServise=userServise
+    }
     generateCard(book,index){
       const card = this.createElement('article','card')
       const card_img = this.createElement('div','card__img');
@@ -95,6 +185,8 @@
       card.appendChild(card_authors)
       card.appendChild(card_title)
       card.appendChild(card_info)
+      this.cardsService.setHandler(link_1,'click',this.userServise.handleOrder,index)
+      this.cardsService.setHandler(link_2,'click',this.userServise.handleLike,index)
      return card;
     }
     
@@ -107,23 +199,34 @@
       }
       return element;
     }
+    generateUserLists(){
+      [...this.userServise.orderList.values()].forEach((book,i)=>{
+        const book_index=this.createElement('div','',i);
+        const book_title=this.createElement('div','',book.title);
+        const book_amount=this.createElement('div','',book.amount);
+        const actions=this.createElement('div','',' + - ');
+        const book_price=this.createElement('div','',book.price);
+        const total=this.createElement('div','',+(book.price)*(+book.amount));
+        document.querySelector('.book-list').append(book_index,book_title,book_amount,actions,book_price,total)
+      })
+    }
 
-    addToFavourites(){ }
-    addToCart(){}
 
   }
-  const service = new CardsServise(new CardComponent())
+  
   const userServise = new UserServise()
-  //service.loadItems();
+  const cardsService = new CardsServise(userServise)
+  cardsService.cardComponent=new CardComponent(cardsService,userServise);
+  cardsService.loadItems();
  
   function openPopup(index){
     let popup=document.getElementById('popup');
     popup.classList.add('popup_open')
     popup.children[0].classList.add('popup_open')
-    document.querySelector('.popup_title').innerText=service.cards[index].title;
-    document.querySelector('.popup_authors').innerText=service.cards[index].authors;
-    document.querySelector('.popup_description').innerText=service.cards[index].shortDescription;
-    document.querySelector('img.popup_img').src=service.cards[index].thumbnailUrl;
+    document.querySelector('.popup_title').innerText=cardsService.cards.get(index).title;
+    document.querySelector('.popup_authors').innerText=cardsService.cards.get(index).authors;
+    document.querySelector('.popup_description').innerText=cardsService.cards.get(index).description;
+    document.querySelector('img.popup_img').src=cardsService.cards.get(index).imgUrl;
   }
  function closePopup(){
    let popup=document.getElementById('popup');
@@ -131,4 +234,4 @@
     popup.children[0].classList.remove('popup_open')
   }
 
-  
+ 
