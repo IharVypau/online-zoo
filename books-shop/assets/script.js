@@ -62,12 +62,6 @@ class LayoutComponent{
         //this.cards=booksJSON;
       })
     }
-    reRenderBooks(){
-     this.cardsHTML.forEach((card)=>{
-      this.fragment.appendChild(card)
-     })
-      this.content.appendChild(this.fragment)
-    }
 
     renderBooks(books){
       this.content = document.getElementById("container")
@@ -81,7 +75,6 @@ class LayoutComponent{
       this.content.appendChild(this.fragment);
       this.content.addEventListener('click',(event)=>{
         this.updateData()
-        
       },false);
     }
 
@@ -91,19 +84,18 @@ class LayoutComponent{
     }
     
     showBookLists(){
-      this.content.innerHTML="";
-      const myBooks =document.getElementById('book-list')
-      myBooks.classList.add('showLists');
-      this.content.appendChild(myBooks)
+      
+      document.querySelector('#book-list').classList.add('showLists');
+      this.content.innerHTML=""
+      // myBooks.classList.add('showLists');
+      // this.content.appendChild(myBooks)
       this.cardComponent.generateUserLists()
     }
 
     backToCatalog(){
-      const myBooks =document.getElementById('book-list')
-      myBooks.classList.remove('showLists')
-      this.content.innerHTML="";
-      this.reRenderBooks()
-      document.body.appendChild(myBooks)
+      document.getElementById('book-list').classList.remove('showLists');
+      [...document.querySelectorAll('.book-list')].forEach(el=>el.innerHTML='');
+      this.cardsHTML.forEach((card)=>{ this.content.appendChild(card) })
     }
     setHandler(el,event_type,fn,args){
       el.addEventListener(event_type,fn.bind(null,el,args,this,this.userService))
@@ -202,8 +194,9 @@ class LayoutComponent{
       }
       return element;
     }
+
     generateUserLists(){
-      const parent = document.querySelector('.book-list')
+      const parent = document.querySelector('.order_list')
       this.createFieldsTable(parent,['#','Book Title','Amount','Total','Actions']);
       [...this.userServise.orderList.values()].forEach((book,i)=>{
         const book_index=this.createElement('div','',++i);
