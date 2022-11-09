@@ -72,7 +72,7 @@ class LayoutComponent{
     renderBooks(books){
       this.content = document.getElementById("container")
       books.forEach((book,index) => {
-        const bookObj= new Book(book.isbn,book.title,book.shortDescription,book.authors,book.thumbnailUrl,'90$')
+        const bookObj= new Book(book.isbn,book.title,book.shortDescription,book.authors,book.thumbnailUrl,'90')
         const card = this.cardComponent.generateCard(book,book.isbn)
         this.cardsHTML.push(card)
         this.fragment.appendChild(card)
@@ -149,6 +149,9 @@ class LayoutComponent{
       let book = this.cardService.cards.get(id)
       book.amount=amount;
     }
+    getTotalSum(){
+      return  [...this.orderList.values()].reduce((sum,book)=>sum+Number(book.price),0)
+    }
   }
 
   class CardComponent{
@@ -200,16 +203,27 @@ class LayoutComponent{
       return element;
     }
     generateUserLists(){
+      const parent = document.querySelector('.book-list')
+      this.createFieldsTable(parent,['#','Book Title','Amount','Total','Actions']);
       [...this.userServise.orderList.values()].forEach((book,i)=>{
-        const book_index=this.createElement('div','',i);
-        const book_title=this.createElement('div','',book.title);
+        const book_index=this.createElement('div','',++i);
+        const book_title=this.createElement('div');
+        book_title.appendChild(this.createElement('a','link_1',book.title))
         const book_amount=this.createElement('div','',book.amount);
-        const actions=this.createElement('div','',' + - ');
-        const book_price=this.createElement('div','',book.price);
         const total=this.createElement('div','',+(book.price)*(+book.amount));
-        document.querySelector('.book-list').append(book_index,book_title,book_amount,actions,book_price,total)
+        const actions=this.createElement('div','','X');
+        parent.append(book_index,book_title,book_amount,total,actions)
+      })
+      const total_sum=this.createElement('h3','total_sum','Total:')
+      total_sum.appendChild(this.createElement('span','',this.userServise.getTotalSum()+' $'))
+      parent.insertBefore(total_sum, null)
+    }
+    createFieldsTable(parent,fields=[]){
+      fields.forEach(field=>{
+        parent.appendChild(this.createElement('div','',field))
       })
     }
+
 
 
   }

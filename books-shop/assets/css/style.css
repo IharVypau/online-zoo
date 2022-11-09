@@ -306,16 +306,11 @@ a.card__icon{
     margin-right: 8px;
 }
 
-
-
-
-.book-list{
-    
-}
 .book-list>div{
-    border-bottom: 1px solid black;
     background-color: #fff;
     padding: 0.5rem;
+    align-self: center;
+    height: 100%;
 }
 
 
@@ -380,9 +375,10 @@ a.card__icon{
   }
   .tab-content .book-list{
     display: grid;
-    grid-template-columns: 5rem 1fr repeat(3, minmax(2rem, 1fr));
-    grid-auto-rows: minmax(4rem,1fr);
+    grid-template-columns: 5rem 1fr repeat(3, minmax(2rem, 0.5fr));
+    
     row-gap: 1px;
+    background: #000;
   }
   .tab-switch:checked + .tab-label {
     background: var(--dark-color);
@@ -396,4 +392,22 @@ a.card__icon{
     z-index: 2;
     opacity: 1;
     transition: all 0.35s;
+  }
+  .link_1{
+    font-size: var(--normal-font-size);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .link_1:hover{
+    color: var(--accent-color);
+  }
+  .total_sum{
+    grid-column: 1 / -1;
+    background: #fff;
+    height: 100%;
+    padding: 1rem;
+    margin: 0;
+  }
+  .total_sum span{
+    padding-left: .5rem;
   }
