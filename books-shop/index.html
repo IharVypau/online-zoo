@@ -14,8 +14,7 @@
             <h1 class="title-shop">books shop</h1>
             <nav class="nav-panel">
                 <div class="user-info">
-                   
-                    <a  class="card__icon cart" onclick="cardsService.showBookLists()"><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
+                    <a  class="card__icon cart" onclick="cardsService.showBookLists(this)"><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
                     <a href="" class="card__icon"><ion-icon name="heart-outline"></ion-icon><span class="like_items">0</span></a>
                 </div>
             </nav>
@@ -63,7 +62,7 @@
         <div class="tabs">
             <div class="tab">
                 <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-                <label for="tab-1" class="tab-label">Your Order List</label>
+                <label for="tab-1" class="tab-label">Your Order</label>
                 <div class="tab-content">
                     <div class="book-list order_list">
                     </div>
@@ -71,31 +70,9 @@
             </div>
             <div class="tab">
                 <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
-                <label for="tab-2" class="tab-label">Your Favaurite List</label>
+                <label for="tab-2" class="tab-label">Your Favaurite</label>
                 <div class="tab-content">
                     <div class="book-list like_list">
-                        <div>#</div>
-                        <div>Item</div>
-                        <div>Amount</div>
-                        <div>Actions</div>
-                        <div>Total</div>
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
-                        <div>4</div>
-                        <div>5</div>
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
-                        <div>4</div>
-                        <div>5</div>
-                        
-                        <div>3</div>
-                        <div>12</div>
-                        <div>13</div>
-                        <div>14</div>
-                        <div>15</div>
-                        <h3 class="heading">Total:</h3>
                     </div>
                 </div>
             </div>

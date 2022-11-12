@@ -26,25 +26,6 @@ class Book{
 }
 
 
-class LayoutComponent{
-  constructor(){
-  }
-  generateElement(el,class_name="",text="",atrrs={}){
-    const element= document.createElement(el)
-    element.className=class_name;
-    element.innerHTML=text
-    for(let attr in atrrs){
-      element.setAttribute(attr,atrrs[attr])
-    }
-    return element;
-  }
-  generateList(list){
-    list.forEach(item=>{
-      
-    })
-  }
-}
-
   class CardsServise{
     constructor(userService,cardComponent=null){
       this.cardsHTML = []
@@ -83,16 +64,17 @@ class LayoutComponent{
       document.querySelector('.like_items').innerText=this.userService.favouritsList.size
     }
     
-    showBookLists(){
-      
-      document.querySelector('#book-list').classList.add('showLists');
-      this.content.innerHTML=""
-      // myBooks.classList.add('showLists');
-      // this.content.appendChild(myBooks)
-      this.cardComponent.generateUserLists()
+    showBookLists(el){
+      if(![...el.classList].includes('active')){
+        el.classList.add('active')
+        document.querySelector('#book-list').classList.add('showLists');
+        this.content.innerHTML=""
+        this.cardComponent.generateUserLists()
+      }
     }
 
     backToCatalog(){
+      document.querySelector('.cart').classList.remove('active')
       document.getElementById('book-list').classList.remove('showLists');
       [...document.querySelectorAll('.book-list')].forEach(el=>el.innerHTML='');
       this.cardsHTML.forEach((card)=>{ this.content.appendChild(card) })
@@ -123,9 +105,9 @@ class LayoutComponent{
       book.amount=1
       this.orderList.set(id,book)
     }
-    removeBookfromOrder(book, id){
+    removeBookfromOrder(book){
       book.amount=0
-      this.orderList.delete(id)
+      this.orderList.delete(book.id)
     }
     
     addLike(book,id){
@@ -142,7 +124,10 @@ class LayoutComponent{
       book.amount=amount;
     }
     getTotalSum(){
-      return  [...this.orderList.values()].reduce((sum,book)=>sum+Number(book.price),0)
+      return  [...this.orderList.values()].reduce((sum,book)=>sum+(Number(book.price)*book.amount),0)
+    }
+    getBookFromOrder(id){
+      return this.orderList.get(id)
     }
   }
 
@@ -196,29 +181,82 @@ class LayoutComponent{
     }
 
     generateUserLists(){
-      const parent = document.querySelector('.order_list')
-      this.createFieldsTable(parent,['#','Book Title','Amount','Total','Actions']);
-      [...this.userServise.orderList.values()].forEach((book,i)=>{
-        const book_index=this.createElement('div','',++i);
-        const book_title=this.createElement('div');
-        book_title.appendChild(this.createElement('a','link_1',book.title))
-        const book_amount=this.createElement('div','',book.amount);
-        const total=this.createElement('div','',+(book.price)*(+book.amount));
-        const actions=this.createElement('div','','X');
-        parent.append(book_index,book_title,book_amount,total,actions)
-      })
-      const total_sum=this.createElement('h3','total_sum','Total:')
-      total_sum.appendChild(this.createElement('span','',this.userServise.getTotalSum()+' $'))
-      parent.insertBefore(total_sum, null)
+      const orderListDiv = document.querySelector('.order_list')
+      const orderListDivWrapper =orderListDiv.parentElement;
+      orderListDivWrapper.innerHTML="";
+      orderListDiv.innerHTML="";
+      this.createFieldsTable(orderListDiv,['#','Book Title','Amount','Total','Actions']);
+      if([...this.userServise.orderList.values()].length>0){
+          [...this.userServise.orderList.values()].forEach((book,i)=>{
+            const book_index=this.createElement('div','item-row',++i);
+            const book_title=this.createElement('div','item-row');
+            book_title.appendChild(this.createElement('a','link_1 item-row',book.title))
+            const book_amount=this.createElement('div','item-row amount-wrapper',book.amount);
+            const total=this.createElement('div',`item-row total_for_${book.id}`,+(book.price)*(+book.amount)+' $');
+            const actions=this.createElement('div','item-row')
+            const removeBtn= this.createElement('button','btn','remove')
+            actions.appendChild(removeBtn)
+            book_amount.innerHTML=` <div class="custom-input" data-book-id=${book.id}>
+                                        <span class="btn_am" data-type="decrease">-</span>
+                                        <input type="number" data-type="custom_change"   step="1" min="1" value=${book.amount} id="counter" max="99">
+                                        <span class="btn_am" data-type="increase">+</span>
+                                    </div> `
+            orderListDiv.append(book_index,book_title,book_amount,total,actions)
+            removeBtn.addEventListener('click',(e)=>this.removeBookfromOrder(e,book),false)
+            this.setAmountHandler(book_amount,'click',book.id)
+            this.setAmountHandler(book_amount,'keyup',book.id)
+          })
+          
+    
+          
+          const summary=this.createElement('div','cart_total sum',)
+          const total_sum=this.createElement('h3','','Total:')
+          const confirm_btn=this.createElement('button','btn btn_confirm','confirm order')
+
+          total_sum.appendChild(this.createElement('span','total',this.userServise.getTotalSum()+' $'))
+          summary.appendChild(total_sum)
+          summary.appendChild(confirm_btn)
+          orderListDiv.insertBefore(summary, null)
+      }else{
+
+      }
+     
+      orderListDivWrapper.appendChild(orderListDiv);
+
     }
-    createFieldsTable(parent,fields=[]){
+    createFieldsTable(orderListDiv,fields=[]){
       fields.forEach(field=>{
-        parent.appendChild(this.createElement('div','',field))
+        orderListDiv.appendChild(this.createElement('div','',field))
       })
     }
+    updateTotal(book){
+      document.querySelector('.total').innerText=this.userServise.getTotalSum()+' $';
+      document.querySelector(`.total_for_${book.id}`).innerHTML= +book.price*book.amount+' $';
+    }
 
-
-
+    setAmountHandler(book_amount,event_type,book_id){
+      const counterInput = book_amount.querySelector('#counter')
+      const book= this.userServise.getBookFromOrder(book_id)
+        book_amount.addEventListener(event_type,(e)=>{
+          e.preventDefault();
+            switch (e.target.getAttribute('data-type') ) {
+              case "increase": { if(+counterInput.value < 9999) {book.amount+=1; counterInput.value=(+counterInput.value)+1;} break;}
+              case "decrease": { if(+counterInput.value > 1) {book.amount-=1;counterInput.value=(+counterInput.value)-1;} break;}
+            
+              default: {
+                  if(+counterInput.value < 9999 && +counterInput.value>0) book.amount=Number(counterInput.value); 
+                  else {book.amount=1; counterInput.value=1;}
+                break;
+              }
+            }
+          this.updateTotal(book)
+        })
+    }
+    removeBookfromOrder(e,book){
+      this.userServise.removeBookfromOrder(book)
+      this.generateUserLists();
+      this.cardsService.updateData()
+    }
   }
   
   const userServise = new UserServise()
