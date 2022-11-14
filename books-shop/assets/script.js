@@ -211,12 +211,13 @@ class Book{
           
           const summary=this.createElement('div','cart_total sum',)
           const total_sum=this.createElement('h3','','Total:')
-          const confirm_btn=this.createElement('button','btn btn_confirm','confirm order')
+          this.confirm_btn=this.createElement('button','btn btn_confirm','confirm order')
 
           total_sum.appendChild(this.createElement('span','total',this.userServise.getTotalSum()+' $'))
           summary.appendChild(total_sum)
-          summary.appendChild(confirm_btn)
+          summary.appendChild( this.confirm_btn)
           orderListDiv.insertBefore(summary, null)
+          this.bindListeners();
       }else{
 
       }
@@ -256,6 +257,12 @@ class Book{
       this.userServise.removeBookfromOrder(book)
       this.generateUserLists();
       this.cardsService.updateData()
+    }
+    bindListeners(){
+      this.confirm_btn.addEventListener('click',()=>{
+        localStorage.setItem('user',JSON.stringify(this.userServise))
+        window.location.assign("/delivery-form.html");
+      })
     }
   }
   
