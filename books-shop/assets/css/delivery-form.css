@@ -79,7 +79,9 @@ header {
     background-color: #161616;
     margin-left: 0.25rem;
 }
-
+.title-shop a{
+    color: var(--dark-color);
+}
 *, ::after, ::before {
     box-sizing: border-box;
 }
@@ -136,9 +138,11 @@ a.card__icon {
     padding: 1rem 1.5rem;
 }
 .container .title{
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     position: relative;
+    line-height: 3rem;
+    color: #023059;
 }
 .container .title::after {
     content: '';
@@ -147,7 +151,7 @@ a.card__icon {
     left:0;
     width: 100%;
     height: 1px;
-    background: #161616;
+    background: #023059;
     margin-left: 0.25rem;
 }
 .container .title::before {
@@ -162,13 +166,17 @@ a.card__icon {
 }
 form .user_details .input-box{
     margin-bottom: .75rem;
-    width: calc(100% / 3 - 1rem);
+    width: calc(100% / 4 - 1rem);
 }
-form .user_details:nth-child(1) .input-box{
+form .user_details:nth-child(1) .input-box,
+form .user_details:nth-child(3) .input-box:nth-child(1){
     width: calc(100% / 2 - 1rem);
 }
 form .user_details:nth-child(2) .input-box{
     width: 100%;
+}
+form .user_details:nth-child(2) .input-box input[type=text]{
+    width: calc(100% - 2.5rem);
 }
 form .user_details .choose-box {
     margin: 1rem 0 0.4rem 0;
@@ -179,6 +187,47 @@ form .user_details .details{
     margin-bottom: .2rem;
     display: block;
 }
+
+.datepicker-toggle {
+    display: inline-flex;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    left: 0.3rem;
+  }
+  
+  .datepicker-toggle-button {
+    position: absolute;
+    left: 0rem;
+    top: 0.55rem;
+    width: 2rem;
+    height: 2rem;
+    background: transparent url(../datepicker.svg) no-repeat center center;
+    vertical-align: middle;
+    margin-left: 0rem;
+   
+}
+  .datepicker-input {
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .datepicker-input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  
 .payment-title{
     width: 100%;
 }
@@ -193,9 +242,13 @@ form .user_details .details{
     font-size:1rem;
     transition: all .3s ease;
 }
+.user_details .input-box input.datepicker-input{
+    width: 2.5rem;
+}
+
 .user_details .input-box input:focus,
 .user_details .input-box input:valid{
-    border-color:var(--dark-color);
+    border-color:#023059;
 }
 .user_details .options{
     display: flex;
@@ -206,19 +259,26 @@ form .user_details .details{
     display: flex;
     align-items: center;
 }
+.user_details .options label:hover {
+    cursor: pointer;
+}
+.user_details .options label:hover .dot{
+    background-color: #ccc;
+    
+}
 .user_details .options label .dot{
     height: 1rem;
     width: 1rem;
     background-color: #d9d9d9;
     border-radius: 50%;
     margin-right: .75rem;
-    border: 4px solid transparent;
+    border: 5px solid transparent;
 }
 
 #cash:checked ~ .options label .one,
 #card:checked ~ .options label .two{
-    border-color: #d9d9d9;
-    background: #262626;
+    border-color: #023059;
+    background: #fff;
 }
 form input[type=radio]{
     display: none;
@@ -260,7 +320,7 @@ form input[type=radio]{
   
   /* When the checkbox is checked, add a blue background */
   .options.checkbox label input:checked ~ .checkmark {
-    background:#292929;
+    background:#023059;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -289,7 +349,26 @@ form input[type=radio]{
     transform: rotate(45deg);
   }
 
+form .button {
+    display: flex;
+    justify-content: center;
+}
+form .button input[type=submit]{
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: #262626;
+    color: #fff;
+    border: 2px solid #262626;
+    width: 100%;
+    border-radius: 0.15rem;
+} 
 
+form .button input[type=submit]:hover{
+    cursor: pointer;
+    background-color: #023059;
+    border-color: #023059;
+}
 
 
   

@@ -285,5 +285,3 @@ class Book{
     popup.classList.remove('popup_open')
     popup.children[0].classList.remove('popup_open')
   }
-
- 

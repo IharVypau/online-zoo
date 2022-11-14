@@ -76,6 +76,9 @@ body {
     background-color: var(--dark-color);
     margin-left: .25rem;
 }
+.title-shop a{
+    color: var(--dark-color);
+}
 .user-info {
     display: flex;
     align-items: center;

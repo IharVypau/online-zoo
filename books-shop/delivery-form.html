@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="header_container">
-            <h1 class="title-shop">books shop</h1>
+            <h1 class="title-shop"><a href="/index.html">books shop</a></h1>
             <nav class="nav-panel">
                 <div class="user-info">
                     <a  class="card__icon cart" onclick=""><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
@@ -19,60 +19,53 @@
             </nav>
         </div>
     </header>
-<!--     
-    Name (mandatory, the length not less than 4 symbols, strings only, without spaces)
-    Surname (mandatory, the length not less than 5 symbols, strings only, without spaces)
-    Delivery date(mandatory, not earlier than next day)
-    Street (mandatory, the length not less than 5 symbols, the numbers are allowed)
-    House number(mandatory, numbers only, positive numbers only)
-    Flat number(mandatory, numbers only, positive numbers only, the dash symbol is allowed. Means, the flat number shouldn't start with minus/dash symbol. For example: -37 is invalid, but 1-37 is valid)
-    Choose the payment type(radio buttons group): Cash or Card (mandatory)
-    Choose 2 gifts: (optional)
-    pack as a gift,
-    add postcard,
-    provide 2% discount to the next time,
-    branded pen or pencil
- -->
+
     <main class="main" id="container">
         <div class="container">
-            <div class="title">Order Form</div>
-            <form action="">
+            <div class="title">Delivery form</div>
+            <form action="" id="form">
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Name</span>
-                        <input type="text" placeholder="Enter your name" required>
+                        <input type="text" name="name" placeholder="Enter your name" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Surname</span>
-                        <input type="text" placeholder="Enter your surname" required>
+                        <input type="text" name="surname"placeholder="Enter your surname" required>
                     </div>
                 </div>
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Delivery date</span>
-                        <input type="date" placeholder="Delivery date" required>
+                        <input type="text" class="date-input-text" name="date" placeholder="Delivery date ( DD-MM-YYYY )" required>
+                        <span class="datepicker-toggle">
+                            <span class="datepicker-toggle-button"></span>
+                            <input type="date" class="datepicker-input"  name="date" min="2022-11-11" max="2030-12-31">
+                           
+                          </span>
                     </div>
+                    
                 </div>
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Street</span>
-                        <input type="text" placeholder="Enter your street" required>
+                        <input type="text" name="street" placeholder="Enter your street" required>
                     </div>
                     <div class="input-box">
                         <span class="details">House number</span>
-                        <input type="text" placeholder="House number" required>
+                        <input type="number" name="houseNumber" min="1" placeholder="House number" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Flat number</span>
-                        <input type="number" placeholder="Flat number" required>
+                        <input type="number" name="flatNumber" min="1" placeholder="Flat number" required>
                     </div>
                 </div>
                
                 <div class="user_details">
                     <div class="choose-box">
-                        <input name="payment" type="radio" id="cash">
-                        <input name="payment" type="radio" id="card">
+                        <input name="payment" type="radio" id="cash" value="cash">
+                        <input name="payment" type="radio" id="card" value="card">
                         <span class="details payment-title">Payment details</span>
                         <div class="options">
                             <label for="cash">
@@ -96,17 +89,17 @@
                          <label for="gift-2">
                             <input name="gift-2" type="checkbox" id="gift-2">
                             <span class="checkmark two"></span>
-                            <span class="type">add postcard</span>
+                            <span class="type">Add postcard</span>
                          </label>
                          <label for="gift-3">
                             <input name="gift-3" type="checkbox" id="gift-3">
                             <span class="checkmark three"></span>
-                            <span class="type">provide 2% discount to the next time</span>
+                            <span class="type">Provide 2% discount to the next time</span>
                          </label>
                          <label for="gift-4">
                             <input name="gift-4" type="checkbox" id="gift-4">
                             <span class="checkmark four"></span>
-                            <span class="type">branded pen or pencil</span>
+                            <span class="type">Branded pen or pencil</span>
                          </label>
                     </div>
                     </div>
@@ -117,13 +110,12 @@
                 </div>
             </form>
         </div>
-            
-
+        
     </main>
 
 
  <!--ICONS-->
  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-
+<script src="./delivery-form.js"></script>
 </body>
 </html>
