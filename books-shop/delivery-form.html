@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/delivery-form.css">
+    <title>Delivery form</title>
+</head>
+<body>
+    <header>
+        <div class="header_container">
+            <h1 class="title-shop"><a href="/index.html">books shop</a></h1>
+            <nav class="nav-panel">
+                <div class="user-info">
+                    <a  class="card__icon cart" onclick=""><ion-icon name="cart-outline"></ion-icon><span class="cart_items">0</span></a> 
+                    <a href="" class="card__icon"><ion-icon name="heart-outline"></ion-icon><span class="like_items">0</span></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main" id="container">
+        <div class="container">
+            <div class="title">Delivery form</div>
+            <form action="" id="form">
+                <div class="user_details">
+                    <div class="input-box">
+                        <span class="details">Name</span>
+                        <input type="text" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Surname</span>
+                        <input type="text" name="surname"placeholder="Enter your surname" required>
+                    </div>
+                </div>
+                <div class="user_details">
+                    <div class="input-box">
+                        <span class="details">Delivery date</span>
+                        <input type="text" class="date-input-text" name="date" placeholder="Delivery date ( DD-MM-YYYY )" required>
+                        <span class="datepicker-toggle">
+                            <span class="datepicker-toggle-button"></span>
+                            <input type="date" class="datepicker-input"  name="date" min="2022-11-11" max="2030-12-31">
+                           
+                          </span>
+                    </div>
+                    
+                </div>
+                <div class="user_details">
+                    <div class="input-box">
+                        <span class="details">Street</span>
+                        <input type="text" name="street" placeholder="Enter your street" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">House number</span>
+                        <input type="number" name="houseNumber" min="1" placeholder="House number" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Flat number</span>
+                        <input type="number" name="flatNumber" min="1" placeholder="Flat number" required>
+                    </div>
+                </div>
+               
+                <div class="user_details">
+                    <div class="choose-box">
+                        <input name="payment" type="radio" id="cash" value="cash">
+                        <input name="payment" type="radio" id="card" value="card">
+                        <span class="details payment-title">Payment details</span>
+                        <div class="options">
+                            <label for="cash">
+                                <span class="dot one"></span>
+                                <span class="type">Cash</span>
+                            </label>
+                            <label for="card" >
+                                <span class="dot two"></span>
+                                <span class="type">Card</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="choose-box">
+                        <span class="details gifts-title">Choose 2 gifts: (optional)</span>
+                    <div class="options checkbox">
+                         <label for="gift-1">
+                            <input name="gift-1" type="checkbox" id="gift-1">
+                            <span class="checkmark one"></span>
+                            <span class="type">Pack as a gift</span>
+                         </label>
+                         <label for="gift-2">
+                            <input name="gift-2" type="checkbox" id="gift-2">
+                            <span class="checkmark two"></span>
+                            <span class="type">Add postcard</span>
+                         </label>
+                         <label for="gift-3">
+                            <input name="gift-3" type="checkbox" id="gift-3">
+                            <span class="checkmark three"></span>
+                            <span class="type">Provide 2% discount to the next time</span>
+                         </label>
+                         <label for="gift-4">
+                            <input name="gift-4" type="checkbox" id="gift-4">
+                            <span class="checkmark four"></span>
+                            <span class="type">Branded pen or pencil</span>
+                         </label>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="button">
+                    <input type="submit" value="purchase">
+                </div>
+            </form>
+        </div>
+        
+    </main>
+
+
+ <!--ICONS-->
+ <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+<script src="./delivery-form.js"></script>
+</body>
+</html>
