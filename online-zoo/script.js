@@ -28,14 +28,16 @@ const checkEmail=()=>{
 }
 [...amount.children].forEach(li=>{
     li.addEventListener('click',()=>{
-        document.querySelector('.active-amount').classList.remove('active-amount')
+        if(document.querySelector('.active-amount')){
+            document.querySelector('.active-amount').classList.remove('active-amount')
+        }
         li.classList.add('active-amount')
         document.querySelector(`.s${li.dataset.amount}`).children.item(0).checked=true
     })
 })
 amount_rbtn.forEach(el=>{
     el.addEventListener('click',()=>{
-        document.querySelector('.active-amount').classList.remove('active-amount')
+        if(document.querySelector('.active-amount'))document.querySelector('.active-amount').classList.remove('active-amount')
         document.querySelector(`#l-${el.value}`).classList.add('active-amount')
     })
 })
