@@ -1,5 +1,6 @@
 class DeliveryForm{
     constructor(validator){
+        const submitBtn=document.querySelector('form input[type=submit]')
         const name  =document.querySelector('.user_details:nth-child(1) .input-box:nth-child(1) input')
         const surname = document.querySelector('.user_details:nth-child(1) .input-box:nth-child(2) input')
         const deliveryDate =  document.querySelector('input.datepicker-input')
@@ -8,95 +9,169 @@ class DeliveryForm{
         const house = document.querySelector('.user_details:nth-child(3) .input-box:nth-child(2) input')
         const flat = document.querySelector('.user_details:nth-child(3) .input-box:nth-child(3) input')
         const payment = document.querySelectorAll('.choose-box input[type=radio]')
+        const paymentTitle = document.querySelector('form .user_details .payment-title')
         const gifts =  document.querySelectorAll('.options input[type=checkbox]')
         this.validator = validator;
-        this.buildListeners({name, surname,deliveryDate,dateTextInput, street, house, flat, payment, gifts})
+        this.formElements={name, surname,deliveryDate,dateTextInput, street, house, flat, payment, gifts,submitBtn,paymentTitle}
+        Validator.invalidElements=new Set([name, surname,dateTextInput, street, house, flat, paymentTitle])
+        this.buildListeners()
         this. setAttributes(deliveryDate);
     }
-    buildListeners(formElements){
-        formElements.name.addEventListener('change',(e)=>{ this.validator.checkName(e)},false)
-        formElements.surname.addEventListener('change',(e)=>{ this.validator.checkSurname(e)},false)
-        formElements.deliveryDate.addEventListener('change',(e)=>{ this.validator.checkDeliveryDate(e)},false)
-        formElements.dateTextInput.addEventListener('change',(e)=>{ this.validator.checkDeliveryDateText(e)},false)
-        formElements.street.addEventListener('change',(e)=>{ this.validator.checkStreet(e)},false)
-        formElements.house.addEventListener('change',(e)=>{ this.validator.checkHouse(e)},false)
-        formElements.flat.addEventListener('change',(e)=>{ this.validator.checkFlat(e)},false)
-        formElements.gifts.forEach(box=>box.addEventListener('change',(e)=>{this.validator.checkGiftsAmount(e,formElements.gifts)},false))
+
+    buildListeners(){
+        this.formElements.name.addEventListener('focusout',(e)=>{ this.validator.checkName( this.formElements.name)})
+        this.formElements.surname.addEventListener('focusout',(e)=>{ this.validator.checkSurname(this.formElements.surname)})
+        this.formElements.deliveryDate.addEventListener('change',(e)=>{ this.validator.checkDeliveryDate(this.formElements.deliveryDate)})
+        this.formElements.dateTextInput.addEventListener('focusout',(e)=>{ this.validator.checkDeliveryDateText(this.formElements.dateTextInput)})
+        this.formElements.street.addEventListener('focusout',(e)=>{ this.validator.checkStreet(this.formElements.street)})
+        this.formElements.house.addEventListener('focusout',(e)=>{ this.validator.checkHouse(this.formElements.house)})
+        this.formElements.flat.addEventListener('focusout',(e)=>{ this.validator.checkFlat(this.formElements.flat)})
+        this.formElements.payment.forEach(radio=>radio.addEventListener('change',(e)=>{this.validator.checkPayment(this.formElements.paymentTitle)},false))
+        this.formElements.gifts.forEach(box=>box.addEventListener('change',(e)=>{this.validator.checkGiftsAmount(e,this.formElements.gifts)},false))
     }
+
     setAttributes(deliveryDate){
         const minDeliveryDate = new Date()
         minDeliveryDate.setDate(minDeliveryDate.getDate() + 1)
         deliveryDate.setAttribute("min",`${minDeliveryDate.getFullYear()}-${minDeliveryDate.getMonth()+1}-${minDeliveryDate.getDate()}`)
     }
     onSubmit(){
-        return this.validator.isValid()
+        return this.validator.isValid(this.formElements)
+    }
+
+    static canSubmit(fomIsValid){
+      const btn = document.querySelector('form input[type=submit]');
+      fomIsValid ? btn.removeAttribute("disabled") : btn.setAttribute("disabled","true")
     }
     
  }
  class Validator {
-   constructor() {}
-   isValid() {
-     try {
-       return this.checkName()
-         .checkSurname()
-         .checkDeliveryDate()
-         .checkStreet()
-         .checkHouse()
-         .checkFlat()
-         .checkPayment()
-         .checkGiftsAmount();
-     } catch (error) {
-       console.log(error);
-       return false;
-     }
-   }
-   //    Name (mandatory, the length not less than 4 symbols, strings only, without spaces)
-   //    Surname (mandatory, the length not less than 5 symbols, strings only, without spaces)
-   //    Delivery date(mandatory, not earlier than next day)
-   //    Street (mandatory, the length not less than 5 symbols, the numbers are allowed)
-   //    House number(mandatory, numbers only, positive numbers only)
-   //    Flat number(mandatory, numbers only, positive numbers only, the dash symbol is allowed. Means, the flat number shouldn't start with minus/dash symbol. For example: -37 is invalid, but 1-37 is valid)
+    static invalidElements
+    static errors={
+      currentErrors:new Set(),
+      textMsgs:{
+        name:"Name (mandatory, the length not less than 4 symbols, strings only, without spaces)",
+        surname:"Surname (mandatory, the length not less than 5 symbols, strings only, without spaces)",
+        deliveryDate:"Delivery date (mandatory, not earlier than next day)",
+        street:" Street (mandatory, the length not less than 5 symbols, the numbers are allowed)",
+        house:"House number(mandatory, numbers only, positive numbers only)",
+        flat:"Flat number(mandatory, numbers only, positive numbers only, the dash symbol is allowed. Means, the flat number shouldn't start with minus/dash symbol. For example: -37 is invalid, but 1-37 is valid)",
+        payment:"Choose the payment type(radio buttons group): Cash or Card (mandatory)"
+      },
+      removeError(error,element){
+        this.currentErrors.has(error) && this.currentErrors.delete(error)
+        Validator.invalidElements.has(element) && Validator.invalidElements.delete(element)
+      },
+      addError(error,element){
+        this.currentErrors.add(error)
+        Validator.invalidElements.add(element)
+      },
+      hasErrors(){
+        DeliveryForm.canSubmit(!Validator.invalidElements.size)
+      },
+    }
 
-   checkName = (e) => {
-      return /^[a-zA-Z]{4,100}$/.test(e.currentTarget.value) ? this : false;
+   constructor() {
+     this.dilogElement = document.querySelector('.form-errors')
+   }
+   isValid(formElements) {
+        return this.checkName(formElements.name)
+          .checkSurname(formElements.surname)
+          .checkDeliveryDate(formElements.deliveryDate)
+          .checkStreet(formElements.street)
+          .checkHouse(formElements.house)
+          .checkFlat(formElements.flat)
+          .checkPayment()
+          .summary();
+   }
+   clearClassList(el, classList=[]){
+    classList.forEach(className=>{
+      el.classList.contains(className) && el.classList.remove(className)
+    })
+   }
+   checkResult(result, element,error){
+    if(result){
+      element.classList.add('valid') 
+      Validator.errors.removeError(error,element)
+    } 
+    else {
+      element.classList.add('invalid')
+      Validator.errors.addError(error,element)
+    }
+    Validator.errors.hasErrors();
+   }
+   checkName = (element) => {
+      const result =/^[a-zA-Z]{4,}$/.test(element.value);
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(result,element,Validator.errors.textMsgs.name)
+      this.showErrors();
+      return this;
    };
-   checkSurname = (e) => {
-      return /^[a-zA-Z]{5,100}$/.test(e.currentTarget.value) ? this : false;
+   checkSurname = (element) => {
+      const result =/^[a-zA-Z]{5,}$/.test(element.value);
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(result,element,Validator.errors.textMsgs.surname)
+      this.showErrors();
+      return this;
    };
    
-   checkDeliveryDate = (e) => {
-        const value = e.currentTarget.value;
+   checkDeliveryDate = (element) => {
+        const value = element.value;
         const regex = new RegExp("(0[1-9]|(1[0-9])|2[0-9]|3[0,1])-(0[1-9]|1[0-2])-([0-9]{4})");
         const dateStr= value.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/,"$3-$2-$1")
         const deliveryDate = new Date(value);
         const result =( regex.test(dateStr) && deliveryDate.getTime() > new Date().getTime() )
-        const inputDateStr=e.target.parentElement.parentElement.children[1]
-        result? inputDateStr.value=dateStr : inputDateStr.value='';
-        return result;
+        const element2=document.querySelector('form .date-input-text')
+        result? element2.value=dateStr : element2.value='';
+        this.clearClassList(element2,['valid','invalid'])
+        this.checkResult(result,element2,Validator.errors.textMsgs.deliveryDate)
+        this.showErrors();
+        return this;
    };
 
-   checkDeliveryDateText=(e)=>{
-        const value = e.currentTarget.value;
+   checkDeliveryDateText=(element)=>{
+        const value =element.value
         const regex = new RegExp("(0[1-9]|(1[0-9])|2[0-9]|3[0,1])-(0[1-9]|1[0-2])-([0-9]{4})");
         const dateStr= value.replace(/(\d{1,2})\W(\d{1,2})\W(\d{4})/,"$3-$2-$1")
         const deliveryDate = new Date(dateStr);
         const result =( regex.test(value) && deliveryDate.getTime() > new Date().getTime() )
-        const datePicker=document.querySelector('input.datepicker-input')
-        result? datePicker.value=dateStr : e.currentTarget.value='';
-        return result;
+        if(result) document.querySelector('input.datepicker-input').value = dateStr 
+        this.clearClassList(element,['valid','invalid'])
+        this.checkResult(result,element,Validator.errors.textMsgs.deliveryDate)
+        this.showErrors();
+        return this;
    }
 
-   checkStreet = (e) => {
-    return /^[a-zA-Z]||[0-9]{5,100}$/.test(e.currentTarget.value) ? this : false;
+   checkStreet = (element) => {
+      const result = /^[a-zA-Z0-9]{5,}$/.test(element.value);
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(result,element,Validator.errors.textMsgs.street)
+      this.showErrors();
+      return this;
    };
-   checkHouse = (e) => {
-     console.log(e.currentTarget.value);
+
+   checkHouse = (element) => {
+      const result = /^[1-9]{1,}$/.test(element.value);
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(result,element,Validator.errors.textMsgs.house)
+      this.showErrors();
+      return this;
    };
-   checkFlat = (e) => {
-     console.log(e.currentTarget.value);
+
+   checkFlat = (element) => {
+      const result = /^[1-9]{1,}(\W\d{1,})?$/.test(element.value);
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(result,element,Validator.errors.textMsgs.flat)
+      this.showErrors();
+      return this;
    };
-   checkPayment = (e) => {
-     console.log(e.currentTarget.value);
+
+   checkPayment = (element) => {
+      const radio_btn= document.querySelector('input[name=payment]:checked')
+      this.clearClassList(element,['valid','invalid'])
+      this.checkResult(!!radio_btn,element,Validator.errors.textMsgs.payment)
+      this.showErrors();
+      return this;
    };
 
    checkGiftsAmount = (e, checkboxes) => {
@@ -109,5 +184,25 @@ class DeliveryForm{
        quantityChecked > 2 ? (el.checked = false) : (el.checked = true);
      }
    };
+
+   showErrors(){
+    this.dilogElement.innerHTML="";
+    for (const err of Validator.errors.currentErrors) {
+      const textEl = document.createElement('p')
+        textEl.textContent = err; 
+        this.dilogElement.appendChild(textEl)
+    }
+   }
+
+   summary(){
+      if(Validator.errors.hasErrors()){
+        this.showErrors()
+        return false;
+      }
+      return true;
+   }
+}
+ const myform=new DeliveryForm(new Validator());
+ const hello=()=>{
+  console.log('asdas');
  }
- new DeliveryForm(new Validator());

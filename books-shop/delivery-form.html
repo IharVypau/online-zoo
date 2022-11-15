@@ -23,7 +23,9 @@
     <main class="main" id="container">
         <div class="container">
             <div class="title">Delivery form</div>
-            <form action="" id="form">
+            
+            <div class="form-errors"></div>
+            <form action="" id="form" >
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Name</span>
@@ -37,10 +39,10 @@
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Delivery date</span>
-                        <input type="text" class="date-input-text" name="date" placeholder="Delivery date ( DD-MM-YYYY )" required>
+                        <input type="text" class="date-input-text" name="deliveryDate" placeholder="Delivery date ( DD-MM-YYYY )" required>
                         <span class="datepicker-toggle">
                             <span class="datepicker-toggle-button"></span>
-                            <input type="date" class="datepicker-input"  name="date" min="2022-11-11" max="2030-12-31">
+                            <input type="date" class="datepicker-input"  name="date" value="" min="2022-11-11" max="2030-12-31">
                            
                           </span>
                     </div>
@@ -58,14 +60,14 @@
 
                     <div class="input-box">
                         <span class="details">Flat number</span>
-                        <input type="number" name="flatNumber" min="1" placeholder="Flat number" required>
+                        <input type="text" name="flatNumber" min="1" placeholder="Flat number" required>
                     </div>
                 </div>
                
                 <div class="user_details">
                     <div class="choose-box">
-                        <input name="payment" type="radio" id="cash" value="cash">
-                        <input name="payment" type="radio" id="card" value="card">
+                        <input name="payment" type="radio" id="cash" value="cash" required>
+                        <input name="payment" type="radio" id="card" value="card" required>
                         <span class="details payment-title">Payment details</span>
                         <div class="options">
                             <label for="cash">
@@ -106,7 +108,7 @@
 
                 </div>
                 <div class="button">
-                    <input type="submit" value="purchase">
+                    <input type="submit" value="purchase" disabled >
                 </div>
             </form>
         </div>
