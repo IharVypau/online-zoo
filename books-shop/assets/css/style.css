@@ -43,7 +43,7 @@ a{
     text-decoration: none;
 }
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: #FAFAFA;
     color: var(--dark-color);
     font-family: var(--body-font);
     margin: 0px;
@@ -51,6 +51,9 @@ body {
 
 .main {
     padding: 8.5rem 2.5rem 2.5rem;
+}
+.main.list{
+    padding: 2.5rem 2.5rem 2.5rem;
 }
 .header_container {
     display: flex;
@@ -134,6 +137,9 @@ header {
     padding: 1rem;
     border-radius: 1rem;
     overflow: hidden;
+    background-color: #fdfdfd;
+    transition: all 0.3s ease 0s;
+
 }
 
 article {
@@ -152,20 +158,15 @@ img {
     height: 100%;
 }
 
-.card__name {
-    position: absolute;
-    left: -30%;
-    top: 0px;
-    width: auto;
+.card_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
     height: 100%;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    text-align: center;
-    background-color: var(--dark-color);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.4s ease 0s;
+    padding: 0.2rem;
+    border-radius: 1rem;
+    background-color: #fff;
 }
 .card__icon{
     font-size: 1.5rem;
@@ -217,24 +218,25 @@ a.card__icon{
 }
 .card:hover{
     box-shadow: 0 .5rem 1rem #D1D9E6;
+    background-color: #FFF;
+    cursor: pointer;
+
+}
+.card:hover .card_container .card_title{
+    color:#023059;
 }
 .card:hover .card__name{
     left: 0;
 }
+.card .card__img{
+    text-align: center;
+    cursor: pointer;
+}
 .card:hover .card__img{
-    
-    margin-left: 3.5rem;
+    padding-top: 0rem;
 }
 .card:hover .card_title {
-    margin-left: 3rem; 
-}
-.card:hover .card_authors {
-    /* margin-left: 3rem;  */
-    display: none;
-}
-.card:hover .card__precis {
-    margin-left: 3.5rem;
-    padding: 0 1.5rem;
+ 
 }
 
 /*-- MEDIA QUERIES --*/

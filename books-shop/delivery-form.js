@@ -1,6 +1,8 @@
 class DeliveryForm{
     constructor(validator){
+        const form = document.querySelector('form')
         const submitBtn=document.querySelector('form input[type=submit]')
+        const summaryDetails=document.querySelector('.summary')
         const name  =document.querySelector('.user_details:nth-child(1) .input-box:nth-child(1) input')
         const surname = document.querySelector('.user_details:nth-child(1) .input-box:nth-child(2) input')
         const deliveryDate =  document.querySelector('input.datepicker-input')
@@ -12,7 +14,7 @@ class DeliveryForm{
         const paymentTitle = document.querySelector('form .user_details .payment-title')
         const gifts =  document.querySelectorAll('.options input[type=checkbox]')
         this.validator = validator;
-        this.formElements={name, surname,deliveryDate,dateTextInput, street, house, flat, payment, gifts,submitBtn,paymentTitle}
+        this.formElements={name, surname,deliveryDate,dateTextInput, street, house, flat, payment, gifts,submitBtn,paymentTitle,summaryDetails,form}
         Validator.invalidElements=new Set([name, surname,dateTextInput, street, house, flat, paymentTitle])
         this.buildListeners()
         this. setAttributes(deliveryDate);
@@ -28,6 +30,7 @@ class DeliveryForm{
         this.formElements.flat.addEventListener('focusout',(e)=>{ this.validator.checkFlat(this.formElements.flat)})
         this.formElements.payment.forEach(radio=>radio.addEventListener('change',(e)=>{this.validator.checkPayment(this.formElements.paymentTitle)},false))
         this.formElements.gifts.forEach(box=>box.addEventListener('change',(e)=>{this.validator.checkGiftsAmount(e,this.formElements.gifts)},false))
+        this.formElements.submitBtn.addEventListener('onsubmit',(e)=>{ this.onSubmit()})
     }
 
     setAttributes(deliveryDate){
@@ -36,8 +39,67 @@ class DeliveryForm{
         deliveryDate.setAttribute("min",`${minDeliveryDate.getFullYear()}-${minDeliveryDate.getMonth()+1}-${minDeliveryDate.getDate()}`)
     }
     onSubmit(){
-        return this.validator.isValid(this.formElements)
+        this.validator.isValid(this.formElements) && this.biuldSummaryReport()
+        return false;
     }
+    
+    biuldSummaryReport(){
+      const formData = new FormData(this.formElements.form);
+       const order = JSON.parse(localStorage.getItem('order'));
+        order.name= formData.get('name')
+        order.surname= formData.get('surname')
+        order.deliveryDate= formData.get('deliveryDate')
+        order.deliverAdress =formData.get('street')+' '+formData.get('houseNumber')+' / '+formData.get('flatNumber')
+        const gifts= [ ...formData.keys()].filter(key=>{  return /^gift-/.test(key)}).map(i=>formData.get(i)).join(', ')
+        const orderListHtml=Object.values(order.orderList).map(item=>{
+          return `
+            <div class="user_details">
+                <div class="input-box head">
+                    <p class="details">${item.id}</p>
+                    <p class="details">${item.title}</p>
+                    <p class="details">${item.price}$</p>
+                    <p class="details">${item._amount} </p>
+                    <p class="details">${+item._amount * (+item.price)}$</p>
+                </div>
+              </div>
+          `
+        }).join('');
+      this.formElements.summaryDetails.innerHTML=`
+          <div class="title">Order Summary Report</div>
+                <div class="user_details">
+                    <div class="input-box">
+                        <p class="details">${order.name}  ${order.surname}</p>
+                        <p class="details"><b>Delivery adress:</b> ${order.deliverAdress}</p>
+                    </div>
+                    <div class="input-box">
+                        <p class="details"><b>Delivery date:</b> ${order.deliveryDate}</p>
+                        <p class="details"><b>Amount paid:</b> ${order.totalSum}$</p>
+                  </div>
+                  <div class="input-box">
+                        <p class="details"><b>Payment type:</b> ${formData.get('payment')}</p>
+                        <p class="details"><b>Gifts:</b> ${gifts}</p>
+                  </div>
+                </div>
+                <div class="title"></div>
+                <div class="user_details">
+                  <div class="input-box head">
+                      <p class="details"><b>Item ID</b></p>
+                      <p class="details"><b>Title</b></p>
+                      <p class="details"><b>Price</b></p>
+                      <p class="details"><b>Qty</b></p>
+                      <p class="details"><b>Ext.Price</b></p>
+                  </div>
+                </div>
+                ${orderListHtml}
+                <p class="details"><b>Amount paid:</b> ${order.totalSum}$</p>
+
+                <div class="button">
+                    <input type="button" value="CLOSE" >
+                </div>
+          `
+          this.formElements.form.parentElement.classList.add('hide');
+          this.formElements.summaryDetails.classList.remove('hide');
+   }
 
     static canSubmit(fomIsValid){
       const btn = document.querySelector('form input[type=submit]');
@@ -81,7 +143,7 @@ class DeliveryForm{
           .checkStreet(formElements.street)
           .checkHouse(formElements.house)
           .checkFlat(formElements.flat)
-          .checkPayment()
+          .checkPayment(formElements.paymentTitle)
           .summary();
    }
    clearClassList(el, classList=[]){
@@ -143,7 +205,7 @@ class DeliveryForm{
    }
 
    checkStreet = (element) => {
-      const result = /^[a-zA-Z0-9]{5,}$/.test(element.value);
+      const result = /^([a-zA-Z0-9]+( [a-zA-Z0-9]*)*){5,}$/.test(element.value);
       this.clearClassList(element,['valid','invalid'])
       this.checkResult(result,element,Validator.errors.textMsgs.street)
       this.showErrors();
@@ -202,7 +264,7 @@ class DeliveryForm{
       return true;
    }
 }
- const myform=new DeliveryForm(new Validator());
+ const form=new DeliveryForm(new Validator());
  const hello=()=>{
   console.log('asdas');
  }

@@ -187,6 +187,9 @@ form .user_details .details{
     margin-bottom: .2rem;
     display: block;
 }
+.hide{
+    display: none;
+}
 
 .datepicker-toggle {
     display: inline-flex;
@@ -365,7 +368,9 @@ form .button input[type=submit]:disabled{
     cursor: default;
 } 
 
-form .button input[type=submit]{
+form .button input[type=submit],
+.summary .button input[type=button]
+{
     cursor: pointer;
     padding: 0.5rem 1rem;
     text-transform: uppercase;
@@ -387,4 +392,40 @@ form .user_details .payment-title.invalid{
     color:#FF5151;
     font-size: small;
     padding: 1rem 0rem 0rem 1rem;
+}
+.container.summary{
+    border:none;
+    max-width: 1200px;
+}
+.container.summary.hide{
+    display:none;
+
+}
+.summary .user_details{
+    padding:2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.summary .button{
+    margin-top:1rem;
+}
+.summary .user_details .input-box{
+    width: calc(100% / 3 - 1rem);
+}
+.summary .user_details .input-box.head{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.summary .user_details:nth-child(n+1) {
+    border-top: 1px solid #ccc;
+}
+.summary .user_details .input-box.head .details:nth-child(2){
+    width: 20rem
+}
+.summary .user_details .input-box.head .details:nth-child(1){
+    width: 7rem;
+}
+.summary .user_details .input-box.head .details:nth-child(n+3){
+    flex-grow: 0.2;
 }

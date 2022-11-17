@@ -24,7 +24,33 @@ class Book{
     return this._amount
   }
 }
-
+class User{
+  construct(){
+    this.name='';
+    this.surname='';
+    this.order={};
+    this.deliveryAdress;
+  }
+  set name(name){
+    this.name = name
+  }
+  get name(){
+    return this.name
+  }
+  set surname(surname){
+    this.surname = surname
+  }
+  get surname(){
+    return this.surname
+  }
+ 
+  set deliveryAdress(adress){
+    this.deliveryAdress = adress
+  }
+  get deliveryAdress(){
+    return this.deliveryAdress
+  }
+}
 
   class CardsServise{
     constructor(userService,cardComponent=null){
@@ -40,7 +66,6 @@ class Book{
       .then(response => response.json())
       .then(booksJSON => {
         this.renderBooks(booksJSON);
-        //this.cards=booksJSON;
       })
     }
 
@@ -138,11 +163,11 @@ class Book{
     }
     generateCard(book,index){
       const card = this.createElement('article','card')
-      const card_img = this.createElement('div','card__img');
+      const card_container = this.createElement('div','card_container')
+      const card_img = this.createElement('div','card__img','',{ 'onclick':`openPopup("${index}");`});
       const card_info = this.createElement('div','card__precis card__preci--now');
-      const card_name = this.createElement('div','card__name','',{ 'onclick':`openPopup("${index}");`});
       const img = this.createElement('img','','',{src:book.thumbnailUrl})
-      const more_btn = this.createElement('p','show_more',"SHOW MORE");
+      // const more_btn = this.createElement('p','show_more',"SHOW MORE");
       const link_1 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'cart'});
       const icon_like= this.createElement('ion-icon','','',{name:'cart-outline'})
       const link_2 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'heart'});
@@ -153,18 +178,18 @@ class Book{
       const card_price_span= this.createElement('span','','$990.00')
     
       card_img.appendChild(img)
-      card_name.appendChild(more_btn);
+      // card_name.appendChild(more_btn);
       link_1.appendChild(icon_like);
       link_2.appendChild(icon_heart);
       card_info.appendChild(link_1)
       card_info.appendChild(card_price)
       card_info.appendChild(link_2)
       card_price.appendChild(card_price_span)
-      card.appendChild(card_img)
-      card.appendChild(card_name)
-      card.appendChild(card_authors)
-      card.appendChild(card_title)
-      card.appendChild(card_info)
+      card.append(card_container)
+      card_container.appendChild(card_img)
+      card_container.appendChild(card_authors)
+      card_container.appendChild(card_title)
+      card_container.appendChild(card_info)
       this.cardsService.setHandler(link_1,'click',this.userServise.handleOrder,index)
       this.cardsService.setHandler(link_2,'click',this.userServise.handleLike,index)
      return card;
@@ -260,9 +285,13 @@ class Book{
     }
     bindListeners(){
       this.confirm_btn.addEventListener('click',()=>{
-        localStorage.setItem('user',JSON.stringify(this.userServise))
+        this.createOrder()
         window.location.assign("/delivery-form.html");
       })
+    }
+    createOrder(){
+      const order = { orderList:Object.fromEntries(this.userServise.orderList),totalSum:this.userServise.getTotalSum() }
+      localStorage.setItem('order',JSON.stringify(order))
     }
   }
   

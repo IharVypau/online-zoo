@@ -25,7 +25,7 @@
             <div class="title">Delivery form</div>
             
             <div class="form-errors"></div>
-            <form action="" id="form" >
+            <form action="" id="form"   onsubmit="form.onSubmit();return false;">
                 <div class="user_details">
                     <div class="input-box">
                         <span class="details">Name</span>
@@ -84,22 +84,22 @@
                         <span class="details gifts-title">Choose 2 gifts: (optional)</span>
                     <div class="options checkbox">
                          <label for="gift-1">
-                            <input name="gift-1" type="checkbox" id="gift-1">
+                            <input name="gift-1" type="checkbox" id="gift-1" value="Pack as a gift">
                             <span class="checkmark one"></span>
                             <span class="type">Pack as a gift</span>
                          </label>
                          <label for="gift-2">
-                            <input name="gift-2" type="checkbox" id="gift-2">
+                            <input name="gift-2" type="checkbox" id="gift-2"  value="Add postcard">
                             <span class="checkmark two"></span>
                             <span class="type">Add postcard</span>
                          </label>
                          <label for="gift-3">
-                            <input name="gift-3" type="checkbox" id="gift-3">
+                            <input name="gift-3" type="checkbox" id="gift-3"  value="Provide 2% discount to the next time">
                             <span class="checkmark three"></span>
                             <span class="type">Provide 2% discount to the next time</span>
                          </label>
                          <label for="gift-4">
-                            <input name="gift-4" type="checkbox" id="gift-4">
+                            <input name="gift-4" type="checkbox" id="gift-4"  value="Branded pen or pencil">
                             <span class="checkmark four"></span>
                             <span class="type">Branded pen or pencil</span>
                          </label>
@@ -112,7 +112,10 @@
                 </div>
             </form>
         </div>
-        
+        <div class="container summary hide">
+            
+        </div>
+
     </main>
 
 
