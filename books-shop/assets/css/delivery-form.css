@@ -37,9 +37,11 @@
 
 body{
     height: 100vh;
-    padding: 1rem;
+    margin: 0;
+    padding: 0;
     color: #161616;
     font-family: var(--body-font);
+
 }
 
 header {
