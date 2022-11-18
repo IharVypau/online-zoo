@@ -24,7 +24,33 @@ class Book{
     return this._amount
   }
 }
-
+class User{
+  construct(){
+    this.name='';
+    this.surname='';
+    this.order={};
+    this.deliveryAdress;
+  }
+  set name(name){
+    this.name = name
+  }
+  get name(){
+    return this.name
+  }
+  set surname(surname){
+    this.surname = surname
+  }
+  get surname(){
+    return this.surname
+  }
+ 
+  set deliveryAdress(adress){
+    this.deliveryAdress = adress
+  }
+  get deliveryAdress(){
+    return this.deliveryAdress
+  }
+}
 
   class CardsServise{
     constructor(userService,cardComponent=null){
@@ -40,12 +66,12 @@ class Book{
       .then(response => response.json())
       .then(booksJSON => {
         this.renderBooks(booksJSON);
-        //this.cards=booksJSON;
       })
     }
 
     renderBooks(books){
       this.content = document.getElementById("container")
+      const wrapper = this.cardComponent.createElement('div',' bd-grid cards_wrapper split left')
       books.forEach((book,index) => {
         const bookObj= new Book(book.isbn,book.title,book.shortDescription,book.authors,book.thumbnailUrl,'90')
         const card = this.cardComponent.generateCard(book,book.isbn)
@@ -53,7 +79,32 @@ class Book{
         this.fragment.appendChild(card)
         this.cards.set(book.isbn,bookObj)
       })
-      this.content.appendChild(this.fragment);
+      wrapper.appendChild(this.fragment)
+      this.content.append(wrapper);
+     
+  //   const section=  this.cardComponent.createElement('section','list_wrapper split right','',{'id':"book-list"})
+  //     section.innerHTML = `
+  //     <div class="tabs">
+  //       <div class="tab">
+  //           <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+  //           <label for="tab-1" class="tab-label">Your Order</label>
+  //           <div class="tab-content" ondrop="drop(event)" ondragover="allowDrop(event)"">
+  //               <div class="book-list order_list">
+  //               </div>
+  //           </div>
+  //       </div>
+  //       <div class="tab">
+  //           <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+  //           <label for="tab-2" class="tab-label">Your Favaurits</label>
+  //           <div class="tab-content">
+  //               <div class="book-list like_list">
+  //               </div>
+  //           </div>
+  //       </div>
+  //     <h3 onclick="cardsService.backToCatalog()">Back to Catalog</h3>
+  // </div> `
+  //    this.content.appendChild(section);         
+      
       this.content.addEventListener('click',(event)=>{
         this.updateData()
       },false);
@@ -65,11 +116,19 @@ class Book{
     }
     
     showBookLists(el){
+      const cart = document.querySelector('.cart')
       if(![...el.classList].includes('active')){
-        el.classList.add('active')
-        document.querySelector('#book-list').classList.add('showLists');
-        this.content.innerHTML=""
-        this.cardComponent.generateUserLists()
+          el.classList.add('active')
+        // this.cardComponent.generateUserLists()
+        cart.classList.add('active')
+        const closeCart = document.querySelector('#cart-close')
+        closeCart.addEventListener('click',()=>{
+          cart.classList.remove('active')
+          el.classList.remove('active')
+        },false)
+      }else{
+        cart.classList.remove('active')
+        el.classList.remove('active')
       }
     }
 
@@ -137,36 +196,36 @@ class Book{
       this.userServise=userServise
     }
     generateCard(book,index){
-      const card = this.createElement('article','card')
-      const card_img = this.createElement('div','card__img');
+      const card = this.createElement('article','card','',{'id':book.isbn})
+      const card_container = this.createElement('div','card_container')
+      const card_img = this.createElement('div','card__img','',{ 'draggable':'true',"ondragstart":`drag(event,'${book.isbn}')`});
       const card_info = this.createElement('div','card__precis card__preci--now');
-      const card_name = this.createElement('div','card__name','',{ 'onclick':`openPopup("${index}");`});
       const img = this.createElement('img','','',{src:book.thumbnailUrl})
-      const more_btn = this.createElement('p','show_more',"SHOW MORE");
+      // const more_btn = this.createElement('p','show_more',"SHOW MORE");
       const link_1 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'cart'});
-      const icon_like= this.createElement('ion-icon','','',{name:'cart-outline'})
-      const link_2 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'heart'});
-      const icon_heart= this.createElement('ion-icon','','',{name:'heart-outline'})
+      const icon_cart= this.createElement('i','bx bx-cart-alt')
+      //const link_2 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'heart'});
+      //const icon_heart= this.createElement('i','','',{name:'heart-outline'})
       const card_price= this.createElement('div','card_price')
-      const card_title=this.createElement('p','card_title',book.title);
+      const card_title=this.createElement('p','card_title',book.title,{ 'onclick':`openPopup("${index}");`});
       const card_authors=this.createElement('p','card_authors',book.authors.join(', '));
       const card_price_span= this.createElement('span','','$990.00')
     
       card_img.appendChild(img)
-      card_name.appendChild(more_btn);
-      link_1.appendChild(icon_like);
-      link_2.appendChild(icon_heart);
+      // card_name.appendChild(more_btn);
+      link_1.appendChild(icon_cart);
+      //link_2.appendChild(icon_heart);
       card_info.appendChild(link_1)
       card_info.appendChild(card_price)
-      card_info.appendChild(link_2)
+      //card_info.appendChild(link_2)
       card_price.appendChild(card_price_span)
-      card.appendChild(card_img)
-      card.appendChild(card_name)
-      card.appendChild(card_authors)
-      card.appendChild(card_title)
-      card.appendChild(card_info)
+      card.append(card_container)
+      card_container.appendChild(card_img)
+      card_container.appendChild(card_authors)
+      card_container.appendChild(card_title)
+      card_container.appendChild(card_info)
       this.cardsService.setHandler(link_1,'click',this.userServise.handleOrder,index)
-      this.cardsService.setHandler(link_2,'click',this.userServise.handleLike,index)
+      //this.cardsService.setHandler(link_2,'click',this.userServise.handleLike,index)
      return card;
     }
     
@@ -260,9 +319,13 @@ class Book{
     }
     bindListeners(){
       this.confirm_btn.addEventListener('click',()=>{
-        localStorage.setItem('user',JSON.stringify(this.userServise))
+        this.createOrder()
         window.location.assign("/delivery-form.html");
       })
+    }
+    createOrder(){
+      const order = { orderList:Object.fromEntries(this.userServise.orderList),totalSum:this.userServise.getTotalSum() }
+      localStorage.setItem('order',JSON.stringify(order))
     }
   }
   
@@ -284,4 +347,18 @@ class Book{
    let popup=document.getElementById('popup');
     popup.classList.remove('popup_open')
     popup.children[0].classList.remove('popup_open')
+  }
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev,id) {
+    ev.dataTransfer.setData("id", id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("id");
+    ev.target.appendChild(document.getElementById(data));
   }

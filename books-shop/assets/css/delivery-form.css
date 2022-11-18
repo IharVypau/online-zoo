@@ -37,9 +37,11 @@
 
 body{
     height: 100vh;
-    padding: 1rem;
+    margin: 0;
+    padding: 0;
     color: #161616;
     font-family: var(--body-font);
+
 }
 
 header {
@@ -187,6 +189,9 @@ form .user_details .details{
     margin-bottom: .2rem;
     display: block;
 }
+.hide{
+    display: none;
+}
 
 .datepicker-toggle {
     display: inline-flex;
@@ -246,10 +251,10 @@ form .user_details .details{
     width: 2.5rem;
 }
 
-.user_details .input-box input:focus,
+/* .user_details .input-box input:focus,
 .user_details .input-box input:valid{
     border-color:#023059;
-}
+} */
 .user_details .options{
     display: flex;
     flex-direction: column;
@@ -353,7 +358,7 @@ form .button {
     display: flex;
     justify-content: center;
 }
-form .button input[type=submit]{
+form .button input[type=submit]:disabled{
     padding: 0.5rem 1rem;
     text-transform: uppercase;
     font-weight: 700;
@@ -361,14 +366,68 @@ form .button input[type=submit]{
     color: #fff;
     border: 2px solid #262626;
     width: 100%;
-    border-radius: 0.15rem;
+    border-radius: 0.25rem;
+    cursor: default;
 } 
 
-form .button input[type=submit]:hover{
+form .button input[type=submit],
+.summary .button input[type=button]
+{
     cursor: pointer;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    font-weight: 700;
     background-color: #023059;
-    border-color: #023059;
+    color: #fff;
+    width: 100%;
+    border-radius: 0.25rem;
+    border: 0.125rem solid #023059;
 }
+.user_details .input-box input.invalid,
+form .user_details .payment-title.invalid{
+    border: .1rem solid #FF5151;
+}
+.user_details .input-box input.valid{
+    border: .1rem solid #023059;
+}
+.form-errors{
+    color:#FF5151;
+    font-size: small;
+    padding: 1rem 0rem 0rem 1rem;
+}
+.container.summary{
+    border:none;
+    max-width: 1200px;
+}
+.container.summary.hide{
+    display:none;
 
-
-  
+}
+.summary .user_details{
+    padding:2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.summary .button{
+    margin-top:1rem;
+}
+.summary .user_details .input-box{
+    width: calc(100% / 3 - 1rem);
+}
+.summary .user_details .input-box.head{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.summary .user_details:nth-child(n+1) {
+    border-top: 1px solid #ccc;
+}
+.summary .user_details .input-box.head .details:nth-child(2){
+    width: 20rem
+}
+.summary .user_details .input-box.head .details:nth-child(1){
+    width: 7rem;
+}
+.summary .user_details .input-box.head .details:nth-child(n+3){
+    flex-grow: 0.2;
+}
