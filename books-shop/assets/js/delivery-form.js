@@ -18,16 +18,23 @@ class DeliveryForm{
         Validator.invalidElements=new Set([name, surname,dateTextInput, street, house, flat, paymentTitle])
         this.buildListeners()
         this. setAttributes(deliveryDate);
+        this.initDataInCart()
     }
 
     buildListeners(){
         this.formElements.name.addEventListener('focusout',(e)=>{ this.validator.checkName( this.formElements.name)})
+        this.formElements.name.addEventListener('keyup',(e)=>{ this.validator.checkName( this.formElements.name)})
         this.formElements.surname.addEventListener('focusout',(e)=>{ this.validator.checkSurname(this.formElements.surname)})
+        this.formElements.surname.addEventListener('keyup',(e)=>{ this.validator.checkSurname(this.formElements.surname)})
         this.formElements.deliveryDate.addEventListener('change',(e)=>{ this.validator.checkDeliveryDate(this.formElements.deliveryDate)})
         this.formElements.dateTextInput.addEventListener('focusout',(e)=>{ this.validator.checkDeliveryDateText(this.formElements.dateTextInput)})
+        this.formElements.dateTextInput.addEventListener('keyup',(e)=>{ this.validator.checkDeliveryDateText(this.formElements.dateTextInput)})
         this.formElements.street.addEventListener('focusout',(e)=>{ this.validator.checkStreet(this.formElements.street)})
+        this.formElements.street.addEventListener('keyup',(e)=>{ this.validator.checkStreet(this.formElements.street)})
         this.formElements.house.addEventListener('focusout',(e)=>{ this.validator.checkHouse(this.formElements.house)})
+        this.formElements.house.addEventListener('keyup',(e)=>{ this.validator.checkHouse(this.formElements.house)})
         this.formElements.flat.addEventListener('focusout',(e)=>{ this.validator.checkFlat(this.formElements.flat)})
+        this.formElements.flat.addEventListener('keyup',(e)=>{ this.validator.checkFlat(this.formElements.flat)})
         this.formElements.payment.forEach(radio=>radio.addEventListener('change',(e)=>{this.validator.checkPayment(this.formElements.paymentTitle)},false))
         this.formElements.gifts.forEach(box=>box.addEventListener('change',(e)=>{this.validator.checkGiftsAmount(e,this.formElements.gifts)},false))
         this.formElements.submitBtn.addEventListener('onsubmit',(e)=>{ this.onSubmit()})
@@ -42,7 +49,10 @@ class DeliveryForm{
         this.validator.isValid(this.formElements) && this.biuldSummaryReport()
         return false;
     }
-    
+    initDataInCart(){
+      const cartItemsQty = document.querySelector('.cart_items')
+      cartItemsQty.textContent = Object.keys(JSON.parse(localStorage.getItem('order')).orderList).length
+    }
     biuldSummaryReport(){
       const formData = new FormData(this.formElements.form);
        const order = JSON.parse(localStorage.getItem('order'));
@@ -94,13 +104,19 @@ class DeliveryForm{
                 <p class="details"><b>Amount paid:</b> ${order.totalSum}$</p>
 
                 <div class="button">
-                    <input type="button" value="CLOSE" >
+                    <input type="button" value="CLOSE" onclick='DeliveryForm.goHomePage();' >
                 </div>
           `
+          order.orderList={}
+          order.totalSum=0
+          localStorage.setItem('order',JSON.stringify(order))
+          this.initDataInCart()
           this.formElements.form.parentElement.classList.add('hide');
           this.formElements.summaryDetails.classList.remove('hide');
    }
-
+   static goHomePage(){
+      window.location.assign("/index.html");
+   }
     static canSubmit(fomIsValid){
       const btn = document.querySelector('form input[type=submit]');
       fomIsValid ? btn.removeAttribute("disabled") : btn.setAttribute("disabled","true")
@@ -265,6 +281,3 @@ class DeliveryForm{
    }
 }
  const form=new DeliveryForm(new Validator());
- const hello=()=>{
-  console.log('asdas');
- }

@@ -116,9 +116,7 @@ ul{
     margin-left: auto;
     margin-right: auto;
 }
-.bd-grid.right {
-    margin-right: 45rem;
-}
+
 .bd-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -150,8 +148,8 @@ header {
     position:fixed;
     top:80px;
     right:0;
-    right:-360px;
-    width: 360px;
+    right: calc((100vw - 70%) * (-1));
+    width: calc(100vw - 70%);
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
@@ -165,12 +163,27 @@ header {
     right:0;
     transition: .5s;
 }
-.cart-title{
+.empty-cart{
+    height: 15rem;
     text-align: center;
+    margin: 2.5rem 0;
+}
+.cart-title{
+    text-align: left;
     font-size: 1.5rem;
     font-weight: 700;
     margin-top:2rem;  
     color: #023059; 
+    position: relative;
+}
+.cart-title::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left:0;
+    width: 100%;
+    height: .1rem;
+    background: #023059;
 }
 .cart-box{
     display: grid;
@@ -197,12 +210,28 @@ header {
     font-weight: 600;
 }
 .cart-quantity{
-    border: 1px solid #161616;
-    outline-color: #FF5151;
-    width: 2.2rem;
-    text-align: center;
-    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 100%;
 
+}
+.cart-quantity input{
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.cart-quantity span{
+    font-size: 1.5rem;
+    user-select: none;
+    width: 2rem;
+    text-align: center;
+    color: #023059;
 }
 .cart-remove{
     font-size: 1.5rem;
@@ -228,6 +257,9 @@ header {
 .total-price{
     margin-left: .5rem;
 }
+.btn-wrapper{
+    height: 8rem;
+}
 .btn-buy{
     display: flex;
     margin: 1.5rem auto 0 auto;
@@ -243,6 +275,7 @@ header {
     justify-content: center;
     border-radius: 0.15rem;
 }
+
 #cart-close{
     position: absolute;
     top: 1rem;
@@ -311,6 +344,7 @@ img {
     justify-content: space-between;
     align-items: flex-end;
     transition: .3s;
+    flex-direction:row-reverse;
 }
 .card__preci{
     display: block;
@@ -356,7 +390,11 @@ a.card__icon{
 }
 .card .card__img{
     text-align: center;
-    cursor: pointer;
+    cursor: grab;
+}
+
+.card .card__img:active{
+    cursor: grabbing;
 }
 .card:hover .card__img{
     padding-top: 0rem;
@@ -378,7 +416,9 @@ a.card__icon{
         margin-right: 0rem;
     }
     .bd-grid.right {
-        margin-right: 45rem;
+        max-width: calc(1400px - (30%));
+        margin-left: 0;
+         margin-right: auto;
     }
 }
 
