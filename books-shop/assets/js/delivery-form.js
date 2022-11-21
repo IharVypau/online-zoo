@@ -115,7 +115,7 @@ class DeliveryForm{
           this.formElements.summaryDetails.classList.remove('hide');
    }
    static goHomePage(){
-      window.location.assign("/index.html");
+      window.location.assign("./index.html");
    }
     static canSubmit(fomIsValid){
       const btn = document.querySelector('form input[type=submit]');

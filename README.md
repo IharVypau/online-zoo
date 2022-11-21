@@ -4,3 +4,4 @@
 ## My projects in this course
  - #### [Portfolio](https://iharvypau.github.io/rsschool-cv/)
  - #### [Online-zoo](https://rolling-scopes-school.github.io/iharvypau-JSFEEN2022Q3/online-zoo/)
+ - #### [Books-shop](https://rolling-scopes-school.github.io/iharvypau-JSFEEN2022Q3/books-shop/)
