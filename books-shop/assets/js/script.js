@@ -24,41 +24,20 @@ class Book{
     return this._amount
   }
 }
-class User{
-  construct(){
-    this.name='';
-    this.surname='';
-    this.order={};
-    this.deliveryAdress;
-  }
-  set name(name){
-    this.name = name
-  }
-  get name(){
-    return this.name
-  }
-  set surname(surname){
-    this.surname = surname
-  }
-  get surname(){
-    return this.surname
-  }
- 
-  set deliveryAdress(adress){
-    this.deliveryAdress = adress
-  }
-  get deliveryAdress(){
-    return this.deliveryAdress
-  }
-}
 
-  class CardsServise{
+
+  class BooksService{
     constructor(userService,cardComponent=null){
       this.cardsHTML = []
-      this.cards =new Map()
-      this.fragment= document.createDocumentFragment();
+      this.catalog =new Map()
       this.cardComponent=cardComponent;
       this.userService=userService;
+    }
+
+     init(){
+     document.body.appendChild(this.buildHeader());
+     this.loadItems();
+     document.body.appendChild(this.buidModalContainer());
     }
 
     async loadItems(){
@@ -66,30 +45,77 @@ class User{
       .then(response => response.json())
       .then(booksJSON => {
         this.renderBooks(booksJSON);
+      }).catch(err=>{
+        console.log('Error: ',err);
       })
     }
 
-    renderBooks(books){
-      this.content = document.getElementById("container")
-      const wrapper = this.cardComponent.createElement('div',' bd-grid cards_wrapper split left')
-      books.forEach((book,index) => {
-        const bookObj= new Book(book.isbn,book.title,book.shortDescription,book.authors,book.thumbnailUrl,'90')
-        const card = this.cardComponent.generateCard(book,book.isbn)
+     renderBooks(books){
+        const mainFragment= document.createDocumentFragment();
+        const main= this.cardComponent.createElement('main','main','',{id:"container"})
+        const wrapper = this.cardComponent.createElement('div',' bd-grid cards_wrapper split left')
+        books.forEach((book,index) => {
+        const bookObj= new Book(book.isbn,book.title,book.description,book.author,book.imageLink,book.price)
+        const card = this.cardComponent.buildCardElement(book)
         this.cardsHTML.push(card)
-        this.fragment.appendChild(card)
-        this.cards.set(book.isbn,bookObj)
+        wrapper.appendChild(card)
+        this.catalog.set(book.isbn,bookObj)
       })
-      wrapper.appendChild(this.fragment)
-      this.content.append(wrapper);   
-      
-      this.content.addEventListener('click',(event)=>{
-        this.updateData()
-      },false);
+      main.appendChild(wrapper)
+      mainFragment.append(main);   
+      document.body.append(mainFragment);
     }
+
+    buildHeader(){
+
+      const createElements=(createElement)=>{
+        const headerFragment = new DocumentFragment()
+        const header = createElement('header')
+        const header_container = createElement('div','header_container')
+        const h1_title = createElement('h1','title-shop')
+        const link_h1_title = createElement('a','','books shop',{"href":"./index.html"})
+        const nav = createElement('nav','nav-panel')
+        const user_info = createElement('div','user-info','',{ ondrop:"cardComponent.drop(event)",ondragover:"cardComponent.allowDrop(event)" })
+        const cart_icon = createElement('a','card__icon','',{onclick:"bookService.showBookLists(this)"})
+        const cart = createElement('div','cart')
+        const cart_title = createElement('h2','cart-title','SHOPPING CART')
+        const cart_content = createElement('div','cart-content')
+        const cart_icon_close = createElement('div','cart-icon-close')
+        return bindElementsTogether({header,header_container,h1_title,link_h1_title,nav,user_info,cart_icon,cart,cart_title,cart_content,cart_icon_close,headerFragment});
+      }
+
+      const bindElementsTogether=(headerElements)=>{
+        headerElements.headerFragment.append(headerElements.header)
+        headerElements.header.appendChild(headerElements.header_container) 
+        headerElements.header_container.appendChild(headerElements.h1_title) 
+        headerElements.header_container.appendChild(headerElements.nav) 
+        headerElements.h1_title.appendChild(headerElements.link_h1_title) 
+        headerElements.nav.appendChild(headerElements.user_info)
+        headerElements.user_info.appendChild(headerElements.cart_icon)
+        headerElements.user_info.appendChild(headerElements.cart)
+        headerElements.cart.appendChild(headerElements.cart_title)
+        headerElements.cart.appendChild(headerElements.cart_content)
+        headerElements.cart.appendChild(headerElements.cart_icon_close)
+        headerElements.cart_icon.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z"></path><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="16.5" cy="19.5" r="1.5"></circle></svg><span class="cart_items">0</span>'
+        headerElements.cart_icon_close.innerHTML='<svg  id="cart-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>'
+        return headerElements.headerFragment
+      }
+
+      return createElements(this.cardComponent.createElement);
+    }
+
 
     updateData(id){
       document.querySelector('.cart_items').innerText=this.userService.orderList.size
-      //document.querySelector('.like_items').innerText=this.userService.favouritsList.size
+    }
+    
+    buidModalContainer(){
+      const popUpFragment = new DocumentFragment()
+      const section = this.cardComponent.createElement('section','modal container','',{id:"popup"})
+      const popup_content = this.cardComponent.createElement('div','popup_content')
+      popUpFragment.append(section)
+      section.append(popup_content)
+      return popUpFragment;
     }
     
     showBookLists(el){
@@ -108,51 +134,48 @@ class User{
         el.classList.remove('active')
       }
     }
-
-    // backToCatalog(){
-    //   document.querySelector('.cart').classList.remove('active')
-    //   document.getElementById('book-list').classList.remove('showLists');
-    //   [...document.querySelectorAll('.book-list')].forEach(el=>el.innerHTML='');
-    //   this.cardsHTML.forEach((card)=>{ this.content.appendChild(card) })
-    // }
-    // setHandler(el,event_type,fn,args){
-    //   el.addEventListener(event_type,fn.bind(null,el,args,this,this.userService))
-    // }
+    fillPopUpContent(book){
+      const popup_content =document.querySelector('.popup_content')
+      const img = this.cardComponent.createElement('img','popup_img','',{src:book.imgUrl,alt:'book image'})
+      const title=  this.cardComponent.createElement('h2','popup_title',book.title)
+      const popup_authors=  this.cardComponent.createElement('h3','popup_authors',book.authors)
+      const popup_description=  this.cardComponent.createElement('p','popup_description', book.description)
+      const button_close=  this.cardComponent.createElement('button','','',{id:"close-reader",onclick:"closePopup()"})
+      const btn_add=  this.cardComponent.createElement('button','btn','ADD TO CART')
+      popup_content.appendChild(img)
+      popup_content.appendChild(title)
+      popup_content.appendChild(popup_authors)
+      popup_content.appendChild(popup_description)
+      popup_content.appendChild(button_close)
+      popup_content.appendChild(btn_add)
+      button_close.innerHTML='<div>Close</div><svg id="close-x" width="20px" height="20px" viewBox="0 0 20 20"><title>Close</title> <g stroke="#000" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Icon_Close"  stroke="#000"><g><g><g><line x1="1.16116524" y1="18.8388348" x2="18.8388348" y2="1.16116524" id="Stroke-1"></line><line x1="1.16116524" y1="1.16116524" x2="18.8388348" y2="18.8388348" id="Stroke-3"></line></g></g></g></g></g></svg>'
+      btn_add.onclick=()=>{
+        this.addBookToOrder(book);
+        closePopup();
+      }
+    }
+    addBookToOrder(book){
+      this.userService.orderList.set(book.id,book)
+      this.cardComponent.buildUserCart();
+      this.updateData();
+      const card = document.getElementById(book.id);
+      card.querySelector('.card__icon').classList.add('active')
+    }
   }
   
   class UserServise{
     constructor(){
       this.orderList = new Map();
       this.favouritsList=new Map();
-      this.catalog=null;
+      this.shop=null;
     }
-    // handleOrder(el,id,cardService,userServise){
-    //   userServise.orderList.has(id) ?  userServise.removeBookfromOrder(id) :  userServise.addBookToOrder(id);
-    //   el.classList.add('selected');
-    // }
-
-    // handleLike(el,id,cardService,userServise){
-    //   let book = cardService.cards.get(id)
-    //   userServise.favouritsList.has(id) ?  userServise.removeLike(book, id) :  userServise.addLike(book, id);
-    //   el.classList.toggle('selected');
-    // }
-
     addBookToOrder(id){
-      const book = this.catalog.cards.get(id)
+      const book = this.shop.catalog.get(id)
       this.orderList.set(id,book)
     }
     removeBookfromOrder(id){
       this.orderList.delete(id)
     }
-    
-    // addLike(book,id){
-    //   book.like=true;
-    //   this.favouritsList.set(id,book)
-    // }
-    // removeLike(book,id){
-    //   book.like=false;
-    //   this.favouritsList.delete(id)
-    // }
     
     setAmount(amount,id){
       const book = this.orderList.get(id)
@@ -167,33 +190,26 @@ class User{
   }
 
   class CardComponent{
-    constructor(cardsService,userServise){
-      this.cardsService=cardsService
+    constructor(bookService,userServise){
+      this.bookService=bookService
       this.userServise=userServise
     }
-    generateCard(book,id){
+    buildCardElement(book){
       const card = this.createElement('article','card','',{'id':book.isbn})
       const card_container = this.createElement('div','card_container')
       const card_img = this.createElement('div','card__img','',{ 'draggable':'true',"ondragstart":`cardComponent.drag(event,'${book.isbn}')`});
       const card_info = this.createElement('div','card__precis card__preci--now');
-      const img = this.createElement('img','','',{src:book.thumbnailUrl})
-      // const more_btn = this.createElement('p','show_more',"SHOW MORE");
-      const link_1 = this.createElement('a','card__icon','',{'data-index':id,'data-icon':'cart'});
-      const icon_cart= this.createElement('i','bx bx-cart-alt')
-      //const link_2 = this.createElement('a','card__icon','',{'data-index':index,'data-icon':'heart'});
-      //const icon_heart= this.createElement('i','','',{name:'heart-outline'})
+      const img = this.createElement('img','','',{src:book.imageLink})
+      const link_1 = this.createElement('a','card__icon','',{'data-id':book.isbn,'data-icon':'cart'});
       const card_price= this.createElement('div','card_price')
-      const card_title=this.createElement('p','card_title',book.title,{ 'onclick':`openPopup("${id}");`});
-      const card_authors=this.createElement('p','card_authors',book.authors.join(', '));
-      const card_price_span= this.createElement('span','','$990.00')
+      const card_title=this.createElement('p','card_title',book.title+' (show more)',{ 'onclick':`openPopup("${book.isbn}");`});
+      const card_authors=this.createElement('p','card_authors',book.author);
+      const card_price_span= this.createElement('span','',"$ "+book.price)
     
       card_img.appendChild(img)
-      // card_name.appendChild(more_btn);
-      link_1.appendChild(icon_cart);
-      //link_2.appendChild(icon_heart);
+      link_1.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M21 4H2v2h2.3l3.28 9a3 3 0 0 0 2.82 2H19v-2h-8.6a1 1 0 0 1-.94-.66L9 13h9.28a2 2 0 0 0 1.92-1.45L22 5.27A1 1 0 0 0 21.27 4 .84.84 0 0 0 21 4zm-2.75 7h-10L6.43 6h13.24z"></path><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="16.5" cy="19.5" r="1.5"></circle></svg>';
       card_info.appendChild(link_1)
       card_info.appendChild(card_price)
-      //card_info.appendChild(link_2)
       card_price.appendChild(card_price_span)
       card.append(card_container)
       card_container.appendChild(card_img)
@@ -201,9 +217,11 @@ class User{
       card_container.appendChild(card_title)
       card_container.appendChild(card_info)
       link_1.onclick=(el)=>{
-        this.userServise.addBookToOrder(el.currentTarget.dataset.index);
+        const id = el.currentTarget.dataset.id
+        this.userServise.addBookToOrder(id);
         this.buildUserCart()
         this.updateTotal()
+        this.bookService.updateData(id)
         el.currentTarget.classList.add('active');
       }
      return card;
@@ -233,12 +251,12 @@ class User{
         const plus = this.createElement('span','','&plus;');
         const minus = this.createElement('span','','&minus;');
         const input = this.createElement('input','','',{type:"number",min:"1",value:book.amount})
-        const remBtn = this.createElement('i','bx bx-trash cart-remove')
+        const remBtn = this.createElement('span','cart-remove')
         const total = this.createElement('div','total-title','Your Total: ')
         const totalValue = this.createElement('b');
         const confirmDiv = this.createElement('div','btn-wrapper')
         const btnBuy = this.createElement('button','btn-buy','CONFIRM ORDER')
-
+        remBtn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg>'
         box.appendChild(img);
         box.appendChild(detail_box)
         detail_box.appendChild(title)
@@ -276,7 +294,7 @@ class User{
       this.buildUserCart()
       const card = document.getElementById(id);
       card.querySelector('.card__icon').classList.remove('active')
-      this.cardsService.updateData();
+      this.bookService.updateData();
       this.updateTotal()
     },false)
     elements.plus.onclick=(e)=>{
@@ -295,7 +313,7 @@ class User{
     }
     elements.btnBuy.onclick=()=>{
       this.createOrder()
-      window.location.assign("/delivery-form.html");
+      window.location.assign("./delivery-form.html");
     }
   }
   allowDrop(ev) {
@@ -307,17 +325,12 @@ class User{
   drop(ev) {
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
-    this.userServise.addBookToOrder(id)
-    this.buildUserCart();
-    this.cardsService.updateData();
-    const card = document.getElementById(id);
-    card.querySelector('.card__icon').classList.add('active')
+    this.bookService.addBookToOrder(bookService.catalog.get(id))
   }
                         
     updateTotal(){
       const cart_total_sum =document.querySelector('.total-title').children[0]
       cart_total_sum.innerText=' $'+this.userServise.getTotalSum();
-      //document.querySelector(`.total_for_${book.id}`).innerHTML= +book.price*book.amount+' $';
     }
     removeBookfromOrder(id){
       this.userServise.removeBookfromOrder(id)
@@ -330,23 +343,23 @@ class User{
   }
   
   const userServise = new UserServise()
-  const cardsService = new CardsServise(userServise)
-  userServise.catalog= cardsService
-  const cardComponent=new CardComponent(cardsService,userServise);
-  cardsService.cardComponent=cardComponent;
-  cardsService.loadItems();
+  const bookService = new BooksService(userServise)
+  userServise.shop= bookService
+  const cardComponent=new CardComponent(bookService,userServise);
+  bookService.cardComponent=cardComponent;
+  window.onload=()=>{
+    bookService.init();
+  }
  
   function openPopup(index){
     let popup=document.getElementById('popup');
     popup.classList.add('popup_open')
     popup.children[0].classList.add('popup_open')
-    document.querySelector('.popup_title').innerText=cardsService.cards.get(index).title;
-    document.querySelector('.popup_authors').innerText=cardsService.cards.get(index).authors;
-    document.querySelector('.popup_description').innerText=cardsService.cards.get(index).description;
-    document.querySelector('img.popup_img').src=cardsService.cards.get(index).imgUrl;
+    bookService.fillPopUpContent(bookService.catalog.get(index))
   }
  function closePopup(){
    let popup=document.getElementById('popup');
     popup.classList.remove('popup_open')
     popup.children[0].classList.remove('popup_open')
+    document.querySelector('.popup_content').innerHTML=""
   }

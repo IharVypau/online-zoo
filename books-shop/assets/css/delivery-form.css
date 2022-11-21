@@ -26,7 +26,20 @@
         --smaller-font-size: 0.9rem;
     }
 }
-
+@media screen and (max-width: 768px){
+    div.user-details{
+        flex-direction: column;
+    }
+    form .user_details:nth-child(1) .input-box, form .user_details:nth-child(3) .input-box:nth-child(1) {
+        width: 100% !important;
+    }
+    .container form .user_details{
+        flex-direction: column;
+    }
+    form .user_details .input-box {
+        width:100% !important;
+    }
+}
 
 *{
     margin: 0;
@@ -138,6 +151,7 @@ a.card__icon {
     border: 0.125rem solid;
     border-radius: 1rem;
     padding: 1rem 1.5rem;
+    margin: 1rem;
 }
 .container .title{
     font-size: 1.8rem;
