@@ -8,7 +8,7 @@ const toggleClassActive=(className)=>{
 }
 const btnSubmit =document.querySelector('.submit-btn')
 const amount =document.querySelector('.sum')
-const amount_rbtn =document.querySelectorAll('.amount-radio')
+const amount_rbtn =document.querySelectorAll('.range li')
 const email=document.getElementById('email');
 email.addEventListener('keyup',()=>{
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)){
@@ -28,17 +28,17 @@ const checkEmail=()=>{
 }
 [...amount.children].forEach(li=>{
     li.addEventListener('click',()=>{
-        if(document.querySelector('.active-amount')){
-            document.querySelector('.active-amount').classList.remove('active-amount')
-        }
+        document.querySelector('.active-amount').classList.remove('active-amount')
         li.classList.add('active-amount')
         document.querySelector(`.s${li.dataset.amount}`).children.item(0).checked=true
     })
 })
 amount_rbtn.forEach(el=>{
     el.addEventListener('click',()=>{
-        if(document.querySelector('.active-amount'))document.querySelector('.active-amount').classList.remove('active-amount')
-        document.querySelector(`#l-${el.value}`).classList.add('active-amount')
+        document.querySelector('.active-amount').classList.remove('active-amount')
+        document.querySelector(`#l-${el.children[0].value}`).classList.add('active-amount')
+        document.querySelector(`.s${el.children[0].value}`).children.item(0).checked=true
+
     })
 })
 

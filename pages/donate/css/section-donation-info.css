@@ -165,15 +165,23 @@ section.animals-widjet p.text{
     transform: translateY(0);
     cursor: pointer;
 }
-.range input[type="radio"]:checked{
+.range input[type="radio"]:hover{
     background-color:#fe9013;
+}
+.range li:hover input[type="radio"]{
+    background-color:#fe9013;
+}
+.range li{
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 .sum li:hover{
     color:#fe9013;
 } 
-.range input[type="radio"]:hover{
-    background-color: #fe9013;
-}
 .range input[type="radio"]:active{
     background-color: #4B9200;
 }
