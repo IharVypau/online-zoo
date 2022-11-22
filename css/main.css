@@ -1,0 +1,24 @@
+@import "reset.css";
+@import "header.css";
+@import "buttons.css";
+@import "colors.css";
+@import "typography.css";
+@import "section-1.css";
+@import "section-2.css";
+@import "section-3.css";
+@import "section-4.css";
+@import "section-5.css";
+@import "footer.css";
+
+html{
+    scroll-behavior: smooth;
+}
+.container{
+    max-width: 1600px;
+    margin: 0 auto;
+}
+main{
+    display: grid;
+    grid-template-rows: 80px 700px repeat(4,auto) 443px;
+    grid-auto-columns: 1600px;
+}
